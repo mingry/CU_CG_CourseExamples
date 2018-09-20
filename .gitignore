@@ -1,0 +1,9 @@
+Debug
+Release
+*.lib
+*.dll
+*/.vs
+*/Include/GL/
+*/Include/glm/
+*/Lib/glew32.lib
+*/Lib/freeglut.lib
