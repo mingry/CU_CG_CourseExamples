@@ -35,23 +35,28 @@ int main(int argc, char** argv)
 {
 
 
-	///////////////////////////////////////////////////////////////////////
-	//// Create and Initialize Window
+	////////////////////////////////////////////////////////////////////////////////////
+	//// 1. freeglut 초기화, 원도우 생성하기. 
+	////    Ref: https://en.wikibooks.org/wiki/OpenGL_Programming/Installation/GLUT
+	///////////////////////////////////////////////////////////////////////////////////
+
+	// 1.1. 최기화
 	glutInit(&argc, argv);
 	
-	// specifies display mode
+	// 1.2. 윈도우 모드 설정. 
+	// 더블버퍼링, RGB 프레임버퍼, Depth 버퍼를 사용한다.
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-	// specifies the size, in pixels, of your window
+	// 1.3. 윈도우 사이즈 설정 (가로, 세로 픽셀 수).
 	glutInitWindowSize(g_window_w, g_window_h);
 
-	//glutInitContextVersion(3, 2);
-	//glutInitContextProfile(GLUT_CORE_PROFILE);
-
-	// creates a window with an OpenGL context
+	// 1.4. OpenGL Context와 연결된 윈도우 생성.
 	glutCreateWindow("Computer Graphics");
 	
-	// Callback functions
+	// 1.5. Callback functions 
+	// Ref: http://freeglut.sourceforge.net/docs/api.php#GlobalCallback
+	//      http://freeglut.sourceforge.net/docs/api.php#WindowCallback
+	//      https://www.opengl.org/resources/libraries/glut/spec3/node45.html
 	glutReshapeFunc(Reshape);
 	glutDisplayFunc(Display);
 	glutKeyboardFunc(Keyboard);
@@ -192,14 +197,9 @@ int main(int argc, char** argv)
 	//// Initialize OpenGL
 
 	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
-	glOrthof(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f);
 	
-	// 배경색을 정한다.
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glClearDepth(1.0f);
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
 
 	
@@ -268,10 +268,11 @@ int main(int argc, char** argv)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3 * g_num_triangles, m_indices, GL_STATIC_DRAW);
 
+	
 
 
-
-
+	// 1.6. freeglut 윈도우 이벤트 처리 시작. 윈도우가 닫힐때까지 후한루프 실행.
+	//      Enter event loop
 	glutMainLoop();
 
 	return 0;
@@ -293,6 +294,7 @@ void Display()
 {
 	// 전체 화면을 지운다.
 	// glClear는 Display 함수 가장 윗 부분에서 한 번만 호출되어야한다.
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -336,11 +338,14 @@ void Reshape(int w, int h)
 	//  w : window width   h : window height
 	g_window_w = w;
 	g_window_h = h;
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 	//  w : window width   h : window height
 	//glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 
+	glutPostRedisplay();
 }
 
 
