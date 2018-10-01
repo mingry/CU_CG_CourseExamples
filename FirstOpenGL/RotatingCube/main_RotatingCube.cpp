@@ -1,6 +1,8 @@
 #include <iostream>
 #include "GL/glew.h"
 #include "GL/freeglut.h"
+#include "glm/glm.hpp"
+#include "glm/ext.hpp"
 
 
 GLuint g_window_w = 500;
@@ -10,34 +12,124 @@ GLuint g_window_h = 500;
 //////////////////////////////////////////////////////////////////////
 //// Define Mesh Model
 //////////////////////////////////////////////////////////////////////
-const int g_num_vertices = 4;
-const int g_num_triangles = 2;
+const int g_num_vertices = 24;
+const int g_num_triangles = 12;
 
 GLfloat m_positions[g_num_vertices * 3] =
-{ 0.f,  0.f,  0.f
-, 0.5f, 0.f,  0.f
-, 0.5f, 0.5f, 0.f
-, 0.f,  0.5f, 0.f
+{  0.25f,  0.25f,  0.25f,
+  -0.25f,  0.25f,  0.25f,
+  -0.25f, -0.25f,  0.25f,
+   0.25f, -0.25f,  0.25f,
+ 						
+   0.25f,  0.25f,  0.25f,
+   0.25f,  0.25f, -0.25f,
+  -0.25f,  0.25f, -0.25f,
+  -0.25f,  0.25f,  0.25f,
+ 						
+   0.25f,  0.25f,  0.25f,
+   0.25f, -0.25f,  0.25f,
+   0.25f, -0.25f, -0.25f,
+   0.25f,  0.25f, -0.25f,
+ 						
+   0.25f,  0.25f, -0.25f,
+   0.25f, -0.25f, -0.25f,
+  -0.25f, -0.25f, -0.25f,
+  -0.25f,  0.25f, -0.25f,
+ 						
+   0.25f, -0.25f,  0.25f,
+  -0.25f, -0.25f,  0.25f,
+  -0.25f, -0.25f, -0.25f,
+   0.25f, -0.25f, -0.25f,
+ 						
+  -0.25f,  0.25f,  0.25f,
+  -0.25f,  0.25f, -0.25f,
+  -0.25f, -0.25f, -0.25f,
+  -0.25f, -0.25f,  0.25f
 };
 
 GLfloat m_normals[g_num_vertices * 3] =
-{ 0.f, 0.f, 1.f
-, 0.f, 0.f, 1.f
-, 0.f, 0.f, 1.f
-, 0.f, 0.f, 1.f
+{  0.f,  0.f,  1.f,
+   0.f,  0.f,  1.f,
+   0.f,  0.f,  1.f,
+   0.f,  0.f,  1.f,
+   		 	   	   
+   0.f,  1.f,  0.f,
+   0.f,  1.f,  0.f,
+   0.f,  1.f,  0.f,
+   0.f,  1.f,  0.f,
+   		 	   	   
+   1.f,  0.f,  0.f,
+   1.f,  0.f,  0.f,
+   1.f,  0.f,  0.f,
+   1.f,  0.f,  0.f,
+   		 	   	   
+   0.f,  0.f, -1.f,
+   0.f,  0.f, -1.f,
+   0.f,  0.f, -1.f,
+   0.f,  0.f, -1.f,
+
+   0.f, -1.f,  0.f,
+   0.f, -1.f,  0.f,
+   0.f, -1.f,  0.f,
+   0.f, -1.f,  0.f,
+
+  -1.f,  0.f,  0.f,
+  -1.f,  0.f,  0.f,
+  -1.f,  0.f,  0.f,
+  -1.f,  0.f,  0.f
 };
 
 GLfloat m_colors[g_num_vertices * 4] =
-{ 1.f, 0.f, 0.f, 1.f
-, 0.f, 1.f, 0.f, 1.f
-, 0.f, 0.f, 1.f, 1.f
-, 1.f, 1.f, 0.f, 1.f
+{ 1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f,
+					
+  1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f,
+
+  1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f,
+
+  1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f,
+
+  1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f,
+
+  1.f, 0.f, 0.f, 1.f,
+  0.f, 1.f, 0.f, 1.f,
+  0.f, 0.f, 1.f, 1.f,
+  1.f, 1.f, 0.f, 1.f
 };
 
 GLuint m_indices[g_num_triangles * 3] =
 {
-	0, 1, 2,
-	0, 2, 3
+   0, 1, 2,
+   0, 2, 3,
+   
+   4, 5, 6,
+   4, 6, 7,
+   
+   8,  9, 10,
+   8, 10, 11,
+  
+  12, 13, 14,
+  12, 14, 15,
+  
+  16, 17, 18,
+  16, 18, 19,
+  
+  20, 21, 22,
+  20, 22, 23
 };
 
 
@@ -58,11 +150,17 @@ R"(
 	layout (location=1) in vec3 vs_normal;
 	layout (location=2) in vec4 vs_color;
 
+	uniform mat4 proj_matrix;
+	uniform mat4 view_matrix;
+	uniform mat4 model_matrix;
+
+	out vec3 fs_normal;
 	out vec4 fs_color;
 
 	void main()
 	{
-		gl_Position = vec4(vs_position, 1.f);
+		gl_Position = proj_matrix * view_matrix * model_matrix * vec4(vs_position, 1.f);
+		fs_normal = vec3(view_matrix * model_matrix * vec4(vs_normal, 0.f));
 		fs_color = vs_color;
 	}
 		
@@ -74,12 +172,19 @@ R"(
 	#version 330
 
 	in vec4 fs_color;
+	in vec3 fs_normal;
 	
 	layout (location = 0) out vec4 color;
 
 	void main()
 	{
-		color = fs_color;
+		vec3 N = normalize(fs_normal);
+
+		vec3 L = vec3(1.f, 1.f, 1.f);
+		L = normalize(L);
+
+		float diffuse = clamp(dot(L, N), 0.2f, 1.f);
+		color = vec4(diffuse, diffuse, diffuse, 1.f) * fs_color;
 	}
 		
 )";
@@ -105,6 +210,11 @@ void Display();
 void Timer(int value);
 
 
+
+//////////////////////////////////////////////////////////////////////
+//// Animation Parameters
+//////////////////////////////////////////////////////////////////////
+float g_y_angle = 0.f;
 
 
 int main(int argc, char** argv)
@@ -167,7 +277,7 @@ int main(int argc, char** argv)
 
 	//// Vertex shader program
 	//// 3.1. Vertex shader 객체 생성.
-	v_shader_id = glCreateShader(GL_VERTEX_SHADER);
+	GLuint v_shader_id = glCreateShader(GL_VERTEX_SHADER);
 
 	//// 3.2. Vertex shader 소스코드 입력.
 	glShaderSource(v_shader_id, 1, &v_shader_source, NULL);
@@ -196,7 +306,7 @@ int main(int argc, char** argv)
 
 	//// Fragment shader program 
 	//// 3.5. Fragment shader 객체 생성.
-	f_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint f_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
 	//// 3.6. Fragment shader 소스코드 입력.
 	glShaderSource(f_shader_id, 1, &f_shader_code, NULL);
@@ -347,9 +457,41 @@ void Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+	// Vertex shader 의 matrix 변수들의 location을 받아온다.
+	int m_proj_loc = glGetUniformLocation(s_program_id, "proj_matrix");
+	int m_view_loc = glGetUniformLocation(s_program_id, "view_matrix");
+	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
+
+
+	// Projection Transform Matrix 설정.
+	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), 1.f, 0.01f, 1000.f);
+	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
+
+	// Camera Transform Matrix 설정.
+	glm::mat4 view_matrix = glm::lookAt(glm::vec3(2.f, 1.5f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
+
+
+	// 첫번째 큐브의 Transform Matrix 설정.
+	glm::mat4 T1 = glm::rotate(glm::radians(g_y_angle), glm::vec3(0.f, 1.f, 0.f));
+	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T1));
+
 	glBindVertexArray(g_vao_id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
 	glDrawElements(GL_TRIANGLES, g_num_triangles * 3, GL_UNSIGNED_INT, 0);
+
+
+	//// 두번째 큐브의 Transform Matrix 설정.
+	//glm::mat4 trans_x = glm::translate(glm::vec3(0.5f, 0.f, 0.f));
+	//glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
+	//glm::mat4 T2 = T1 * trans_x * scale_half;
+	//glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T2));
+
+	//glBindVertexArray(g_vao_id);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
+	//glDrawElements(GL_TRIANGLES, g_num_triangles * 3, GL_UNSIGNED_INT, 0);
+
+	
 
 	
 	// flipping the double buffers
@@ -365,6 +507,7 @@ ref: https://www.opengl.org/resources/libraries/glut/spec3/node64.html#SECTION00
 */
 void Timer(int value)
 {
+	g_y_angle += 1.f;
 
 	// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
 	// 결과적으로 Display() 함수가 호출 된다.
