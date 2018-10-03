@@ -173,9 +173,11 @@ R"(
 
 	in vec4 fs_color;
 	in vec3 fs_normal;
-	
-	layout (location = 0) out vec4 color;
 
+	uniform int shading_mode = 1;
+
+	layout (location = 0) out vec4 color;
+	
 	void main()
 	{
 		vec3 N = normalize(fs_normal);
@@ -184,7 +186,11 @@ R"(
 		L = normalize(L);
 
 		float diffuse = clamp(dot(L, N), 0.2f, 1.f);
-		color = vec4(diffuse, diffuse, diffuse, 1.f) * fs_color;
+
+		if ( shading_mode == 1 )
+			color = vec4(diffuse, diffuse, diffuse, 1.f) * fs_color;
+		else if ( shading_mode == 2 )
+			color = vec4(diffuse, diffuse, diffuse, 1.f);
 	}
 		
 )";
@@ -207,6 +213,7 @@ GLuint index_buffer_id;
 //////////////////////////////////////////////////////////////////////
 void Reshape(int w, int h);
 void Display();
+void Keyboard(unsigned char key, int x, int y);
 void Timer(int value);
 
 
@@ -245,6 +252,7 @@ int main(int argc, char** argv)
 	//      https://www.opengl.org/resources/libraries/glut/spec3/node45.html
 	glutReshapeFunc(Reshape);
 	glutDisplayFunc(Display);
+	glutKeyboardFunc(Keyboard);
 	glutTimerFunc((unsigned int)(1000 /60), Timer, 0);
 
 
@@ -536,7 +544,45 @@ void Reshape(int w, int h)
 	glutPostRedisplay();
 }
 
+/**
+Keyboard: 키보드 입력이 있을 때마다 자동으로 호출되는 함수.
+@param key는 눌려진 키보드의 문자값.
+@param x,y는 현재 마우스 포인터의 좌표값.
+ref: https://www.opengl.org/resources/libraries/glut/spec3/node49.html#SECTION00084000000000000000
 
+*/
+void Keyboard(unsigned char key, int x, int y)
+{
+	// keyboard '1' 이 눌려졌을 때.
+	if (key == '1')
+	{
+		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
+		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
+
+		// 'shading_mode' 값으로 1을 설정.
+		glUniform1i(shading_mode_loc, 1);
+
+
+		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
+		// 결과적으로 Display() 함수를 호출하게 된다.
+		glutPostRedisplay();
+	}
+
+	// keyboard '2' 가 눌려졌을 때.
+	else if (key == '2')
+	{
+		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
+		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
+
+		// 'shading_mode' 값으로 2를 설정.
+		glUniform1i(shading_mode_loc, 2);
+
+
+		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
+		// 결과적으로 Display() 함수를 호출하게 된다.
+		glutPostRedisplay();
+	}
+}
 
 
 
