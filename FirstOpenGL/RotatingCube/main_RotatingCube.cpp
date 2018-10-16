@@ -431,6 +431,13 @@ int main(int argc, char** argv)
 	//// 1.6. freeglut 윈도우 이벤트 처리 시작. 윈도우가 닫힐때까지 후한루프 실행.
 	glutMainLoop();
 
+
+	//// 5.12. VAO, VBO 메모리 해제. 
+	glDeleteBuffers(1, &g_vbo_position_id);
+	glDeleteBuffers(1, &g_vbo_color_id);
+	glDeleteBuffers(1, &g_vbo_normal_id);
+	glDeleteVertexArrays(1, &g_vao_id);
+
 	return 0;
 }
 
