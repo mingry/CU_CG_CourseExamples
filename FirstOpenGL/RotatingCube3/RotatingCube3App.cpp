@@ -158,7 +158,7 @@ void Display()
 
 
 	//// 큐브 1.
-	glm::mat4 T1 = glm::rotate( glm::radians(360.f/10.f*g_elaped_time_s), glm::vec3(0.f, 1.f, 0.f));		// y축 중심으로 1초에 한바퀴(360도) 회전
+	glm::mat4 T1 = glm::rotate( glm::radians(360.f*g_elaped_time_s), glm::vec3(0.f, 1.f, 0.f));		// y축 중심으로 1초에 한바퀴(360도) 회전
 	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T1));
 	
 	DrawCube();
