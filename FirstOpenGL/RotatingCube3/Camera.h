@@ -12,14 +12,14 @@ public:
 
 	Camera();
 
-	void setGLMatrix(double m[16]);
-	void getGLMatrix(double m[16]);
+	void setGLMatrix(float m[16]);
+	void getGLMatrix(float m[16]);
 
 	void setTranslation(const glm::vec3 &v);
 	void setRotation(const glm::quat &q);
-	void setZoom(double z);
+	void setZoom(float z);
 	void setZoom(glm::vec3 z);
-	void setZoom(double sx, double sy, double sz);
+	void setZoom(float sx, float sy, float sz);
 
 	void lookAt(glm::vec3 eye, glm::vec3 centor, glm::vec3 up);
 	// void glTranslform() const;
@@ -29,20 +29,20 @@ public:
 	glm::mat4 GetGLViewMatrixInverse() const;
 	glm::mat4 GetGLProjectionMatrix() const;
 
-	void setFov(double f);
-	double getFov() const;
+	void setFov(float f);
+	float getFov() const;
 
-	void setAspectRatio(double r);
-	double getAspectRatio() const;
+	void setAspectRatio(float r);
+	float getAspectRatio() const;
 
 	void setOrthVolume(glm::vec3 volume) { orth_viewport_volume_min=volume*-0.5f; orth_viewport_volume_max=0.5f*volume; }
 	void setOrthVolume(glm::vec3 volume_min, glm::vec3 volume_max) { orth_viewport_volume_min=volume_min; orth_viewport_volume_max=volume_max; }
 	glm::vec3 getOrthVolumeSize() const { return orth_viewport_volume_max-orth_viewport_volume_min; }
 	glm::vec3 getOrthVolumeMin() const { return orth_viewport_volume_min; }
 	glm::vec3 getOrthVolumeMax() const { return orth_viewport_volume_max; }
-	void setNearFar(double n, double f);
-	double getNear() const;
-	double getFar() const;
+	void setNearFar(float n, float f);
+	float getNear() const;
+	float getFar() const;
 
 	glm::vec3 getTranslation() const;
 	glm::quat getRotation() const;
@@ -53,22 +53,22 @@ public:
 
 	// x1, y1 => previouse normalized mouse point, (0~1, 0~1).
 	// x2, y2 => current normalized mouse point, (0~1, 0~1).
-	void inputMouse(int button, double x1, double y1, double x2, double y2, double speedScale = -1.0f);
-	void inputMouse(int button, double x1, double y1, double x2, double y2, glm::vec3 center, double speedScale = -1.0f);
+	void inputMouse(int button, float x1, float y1, float x2, float y2, float speedScale = -1.0f);
+	void inputMouse(int button, float x1, float y1, float x2, float y2, glm::vec3 center, float speedScale = -1.0f);
 	void setPivot(glm::vec3 p) { pivot = p; }
 
 
 	// dx와 dy는 moust point 의 변화량. (y는 화면에서 높으수록 증가)
-	void inputMouse(int button, int dx, int dy, double speedScale = -1.0f);
+	void inputMouse(int button, int dx, int dy, float speedScale = -1.0f);
 
-	void inputMouse(int button, int dx, int dy, int dz, double speedScale = -1.0f);
+	void inputMouse(int button, int dx, int dy, int dz, float speedScale = -1.0f);
 
 	void enableOrtho(bool f) { flag_ortho = f; }
 	bool isOrtho() const { return flag_ortho; }
 
 
 protected:
-	glm::vec3 projectToTrackBall(double x, double y);
+	glm::vec3 projectToTrackBall(float x, float y);
 
 protected:
 	glm::vec3 cameraP;
@@ -76,16 +76,16 @@ protected:
 	// camera 의 실제 물리적 orientation
 	glm::quat cameraQ;			
 	
-	//double cameraZoom;
+	//float cameraZoom;
 	glm::vec3 cameraZoom;
 	
-	double fov;
-	double aspect;
+	float fov;
+	float aspect;
 	bool flag_ortho;
 
-	double _near, _far;
+	float _near, _far;
 
-	double trackBallR;
+	float trackBallR;
 	glm::vec3 orth_viewport_volume_min; 
 	glm::vec3 orth_viewport_volume_max; 
 

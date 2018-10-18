@@ -188,7 +188,7 @@ void Display()
 	DrawCube();
 
 
-	// flipping the double buffers
+	// flipping the float buffers
 	// glutSwapBuffers는 항상 Display 함수 가장 아래 부분에서 한 번만 호출되어야한다.
 	glutSwapBuffers();
 }
@@ -294,10 +294,10 @@ Mouse: 마우스 버튼이 입력될 때마다 자동으로 호출되는 함수.
 */
 void Mouse(int button, int state, int x, int y)
 {
-	double mouse_xd = (double)x / g_window_w;
-	double mouse_yd = 1 - (double)y / g_window_h;
-	double last_mouse_xd = (double)g_last_mouse_x / g_window_w;
-	double last_mouse_yd = 1 - (double)g_last_mouse_y / g_window_h;
+	float mouse_xd = (float)x / g_window_w;
+	float mouse_yd = 1 - (float)y / g_window_h;
+	float last_mouse_xd = (float)g_last_mouse_x / g_window_w;
+	float last_mouse_yd = 1 - (float)g_last_mouse_y / g_window_h;
 
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
@@ -336,10 +336,10 @@ MouseMotion: 마우스 포인터가 움직일 때마다 자동으로 호출되는 함수.
 */
 void MouseMotion(int x, int y)
 {
-	double mouse_xd = (double)x / g_window_w;
-	double mouse_yd = 1 - (double)y / g_window_h;
-	double last_mouse_xd = (double)g_last_mouse_x / g_window_w;
-	double last_mouse_yd = 1 - (double)g_last_mouse_y / g_window_h;
+	float mouse_xd = (float)x / g_window_w;
+	float mouse_yd = 1 - (float)y / g_window_h;
+	float last_mouse_xd = (float)g_last_mouse_x / g_window_w;
+	float last_mouse_yd = 1 - (float)g_last_mouse_y / g_window_h;
 
 	if (g_left_button_pushed)
 	{

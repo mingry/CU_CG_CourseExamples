@@ -47,11 +47,11 @@ Camera::Camera()
 
 
 
-void Camera::setGLMatrix(double m[16])
+void Camera::setGLMatrix(float m[16])
 {
 }
 
-void Camera::getGLMatrix(double m[16])
+void Camera::getGLMatrix(float m[16])
 {
 
 }
@@ -73,7 +73,7 @@ void Camera::setRotation(const glm::quat &r)
 //	cameraQ_y180 = quater(cos(M_PI/2), 0, sin(M_PI/2), 0) * r;
 }
 
-void Camera::setZoom(double z)
+void Camera::setZoom(float z)
 {
 	cameraZoom.x = z;
 	cameraZoom.y = z;
@@ -86,7 +86,7 @@ void Camera::setZoom(glm::vec3 z)
 	cameraZoom = z;
 }
 
-void Camera::setZoom(double sx, double sy, double sz)
+void Camera::setZoom(float sx, float sy, float sz)
 {
 	setZoom(glm::vec3(sx, sy, sz));
 }
@@ -94,12 +94,12 @@ void Camera::setZoom(double sx, double sy, double sz)
 
 
 
-void Camera::setFov(double f)
+void Camera::setFov(float f)
 {
 	fov = f;
 }
 
-double Camera::getFov() const
+float Camera::getFov() const
 {
 	if ( flag_ortho ) return 0;
 	return fov;
@@ -108,29 +108,29 @@ double Camera::getFov() const
 
 
 
-void Camera::setAspectRatio(double r)
+void Camera::setAspectRatio(float r)
 {
 	aspect = r;
 }
 
-double Camera::getAspectRatio() const
+float Camera::getAspectRatio() const
 {
 	return aspect;
 }
 
-void Camera::setNearFar(double n, double f)
+void Camera::setNearFar(float n, float f)
 {
 	_near = n;
 	_far = f;
 }
 
-double Camera::getNear() const
+float Camera::getNear() const
 {
 	if ( flag_ortho ) return orth_viewport_volume_min[2];
 	return _near;
 }
 
-double Camera::getFar() const
+float Camera::getFar() const
 {
 	if ( flag_ortho ) return orth_viewport_volume_max[2];
 	return _far;
@@ -164,10 +164,10 @@ glm::quat Camera::getRotationForGL() const
 }
 
 
-glm::vec3 Camera::projectToTrackBall(double x, double y)
+glm::vec3 Camera::projectToTrackBall(float x, float y)
 {
-	double d, t, z;
-	double r = trackBallR;
+	float d, t, z;
+	float r = trackBallR;
 
 	d = (float) sqrt(x*x + y*y);
 	if( d < r * 0.70710678118654752440f ) // Inside sphere 
@@ -184,9 +184,9 @@ glm::vec3 Camera::projectToTrackBall(double x, double y)
 
 
 
-void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, double speedScale)
+void Camera::inputMouse(int button, float x1, float y1, float x2, float y2, float speedScale)
 {
-	double t_scale = 700;
+	float t_scale = 700;
 	//x1 = x2 = 0.5;
 
 	if ( speedScale > 0 )
@@ -204,7 +204,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 	}
 	else if ( button == IN_ZOOM )
 	{
-		double s;
+		float s;
 		if ( speedScale > 0 ) 
 			s = exp((y2 - y1)*speedScale);
 		else
@@ -231,7 +231,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 		glm::vec3 p2 = projectToTrackBall( x2*2-1, y2*2-1 );
 
 		/*
-		double tmpF = p1[0];
+		float tmpF = p1[0];
 		p1[0] = p2[0];
 		p2[0] = tmpF;
 
@@ -241,7 +241,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 		
 		// Figure out how much to rotate around that axis
 		glm::vec3 d = p2 - p1;
-		double dLen = d.length() / (2.0f * trackBallR);
+		float dLen = d.length() / (2.0f * trackBallR);
 
 		// Avoid problems with out-of-control values
 		if ( dLen > 1.0f ) 
@@ -253,7 +253,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 			dLen = -1.0f;
 		}
 
-		double phi = 2.0f * (float)asin(dLen);
+		float phi = 2.0f * (float)asin(dLen);
 
 		glm::vec3 cross = glm::cross(p1, p2);
 		cross[1] *= -1;
@@ -279,8 +279,8 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 	}
 	else if ( button == IN_ROTATION_Y_UP )
 	{
-		double dy = y2-y1;
-		double dx = x2-x1;
+		float dy = y2-y1;
+		float dx = x2-x1;
 
 		glm::quat rot_x;// = exp(-1*dy*x_axis);
 		// cml::quaternion_rotation_axis_angle(rot_x, x_axis, -1*dy*2);
@@ -318,9 +318,9 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 	
 }
 
-void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, glm::vec3 center, double speedScale)
+void Camera::inputMouse(int button, float x1, float y1, float x2, float y2, glm::vec3 center, float speedScale)
 {
-	double t_scale = 700;
+	float t_scale = 700;
 	//x1 = x2 = 0.5;
 
 	if ( speedScale > 0 )
@@ -338,7 +338,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 	}
 	else if ( button == IN_ZOOM )
 	{
-		double s;
+		float s;
 		if ( speedScale > 0 ) 
 			s = exp((y2 - y1)*speedScale);
 		else
@@ -365,7 +365,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 		glm::vec3 p2 = projectToTrackBall( x2*2-1, y2*2-1 );
 
 		/*
-		double tmpF = p1[0];
+		float tmpF = p1[0];
 		p1[0] = p2[0];
 		p2[0] = tmpF;
 
@@ -375,7 +375,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 		
 		// Figure out how much to rotate around that axis
 		glm::vec3 d = p2 - p1;
-		double dLen = d.length() / (2.0f * trackBallR);
+		float dLen = d.length() / (2.0f * trackBallR);
 
 		// Avoid problems with out-of-control values
 		if ( dLen > 1.0f ) 
@@ -387,7 +387,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 			dLen = -1.0f;
 		}
 
-		double phi = 2.0f * (float)asin(dLen);
+		float phi = 2.0f * (float)asin(dLen);
 
 		glm::vec3 cross = glm::cross(p1, p2);
 		cross[1] *= -1;
@@ -416,7 +416,7 @@ void Camera::inputMouse(int button, double x1, double y1, double x2, double y2, 
 
 
 
-void Camera::inputMouse(int button, int dx, int dy, double speedScale)
+void Camera::inputMouse(int button, int dx, int dy, float speedScale)
 {
 	if ( button == IN_TRANS )
 	{
@@ -428,7 +428,7 @@ void Camera::inputMouse(int button, int dx, int dy, double speedScale)
 	}
 	else if ( button == IN_TRANS_Z )
 	{
-		double moveScale = 50;
+		float moveScale = 50;
 
 		if ( speedScale > 0 )
 		{
@@ -441,7 +441,7 @@ void Camera::inputMouse(int button, int dx, int dy, double speedScale)
 	}
 	else if ( button == IN_ZOOM )
 	{
-		double s;
+		float s;
 		if ( speedScale > 0 ) 
 			s = exp(((float)dy/10)*speedScale);
 		else
@@ -477,7 +477,7 @@ void Camera::inputMouse(int button, int dx, int dy, double speedScale)
 }	
 
 
-void Camera::inputMouse(int button, int dx, int dy, int dz, double speedScale)
+void Camera::inputMouse(int button, int dx, int dy, int dz, float speedScale)
 {
 	if ( button == IN_NONUNIFORM_ZOOM )
 	{
@@ -560,7 +560,7 @@ glm::mat4 Camera::GetGLViewMatrix() const
 
 	// camera가 초기 상태일때 z축의 양의 방향으로 보고 있게 하기 위해 항성 y180을 먼저 적용한다.
 	//cml::vector3d qv =  
-	double angle;
+	float angle;
 	glm::vec3 axis;
 	angle = glm::angle( y180 * inverse(cameraQ) );
 	axis = glm::axis( y180 * inverse(cameraQ) );
