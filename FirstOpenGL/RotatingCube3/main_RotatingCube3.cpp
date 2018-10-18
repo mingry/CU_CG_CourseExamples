@@ -4,11 +4,11 @@
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 
-#include "RotatingCube2App.h"
+#include "RotatingCube3App.h"
 
 
-GLuint g_window_w = 500;
-GLuint g_window_h = 500;
+GLuint g_window_w = 800;
+GLuint g_window_h = 600;
 
 
 
@@ -41,7 +41,9 @@ int main(int argc, char** argv)
 	glutReshapeFunc(Reshape);
 	glutDisplayFunc(Display);
 	glutKeyboardFunc(Keyboard);
-	glutTimerFunc((unsigned int)(1000 /60), Timer, 0);
+	glutTimerFunc((unsigned int)(1000 /60), Timer, (1000 / 60));
+	glutMouseFunc(Mouse);
+	glutMotionFunc(MouseMotion);
 
 
 

@@ -7,7 +7,7 @@
 #include "glm/ext.hpp"
 #include "InitShader.h"
 #include "CubeObj.h"
-#include "RotatingCubeApp.h"
+#include "RotatingCube2App.h"
 
 
 // Window 
@@ -135,6 +135,7 @@ void Display()
 	DrawCube();
 
 	//// 두번째 큐브의 Transform Matrix 설정.
+	// 아래 주석을 해제하고 실행해볼 것.
 	/*
 	glm::mat4 trans_x = glm::translate(glm::vec3(0.5f, 0.f, 0.f));
 	glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));

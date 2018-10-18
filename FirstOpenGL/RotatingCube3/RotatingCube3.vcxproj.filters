@@ -15,16 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main_RotatingCube2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CubeObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InitShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RotatingCube2App.cpp">
+    <ClCompile Include="RotatingCube3App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_RotatingCube3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,7 +41,13 @@
     <ClInclude Include="InitShader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="RotatingCube2App.h">
+    <ClInclude Include="RotatingCube3App.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundObj.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

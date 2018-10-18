@@ -497,15 +497,17 @@ void Display()
 
 
 	//// 두번째 큐브의 Transform Matrix 설정.
-	//glm::mat4 trans_x = glm::translate(glm::vec3(0.5f, 0.f, 0.f));
-	//glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-	//glm::mat4 T2 = T1 * trans_x * scale_half;
-	//glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T2));
+	// 아래 주석을 해제하고 실행해볼 것.
+	/* 
+	glm::mat4 trans_x = glm::translate(glm::vec3(0.5f, 0.f, 0.f));
+	glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
+	glm::mat4 T2 = T1 * trans_x * scale_half;
+	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T2));
 
-	//glBindVertexArray(g_vao_id);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
-	//glDrawElements(GL_TRIANGLES, g_num_triangles * 3, GL_UNSIGNED_INT, 0);
-
+	glBindVertexArray(g_vao_id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
+	glDrawElements(GL_TRIANGLES, g_num_triangles * 3, GL_UNSIGNED_INT, 0);
+	*/
 	
 
 	
