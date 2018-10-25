@@ -5,11 +5,13 @@
 #include "GL/freeglut.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include "InitShader.h"
-#include "Camera.h"
-#include "CubeObj.h"
-#include "GroundObj.h"
-#include "RotatingCube3App.h"
+#include "ConstructiveMeshApp.h"
+#include "../BaseCodes/Camera.h"
+#include "../BaseCodes/GroundObj.h"
+#include "../BaseCodes/InitShader.h"
+#include "../BaseCodes/BasicShapeObjs.h"
+#include "TreeModel0.h"
+
 
 
 // Window and User Interface
@@ -22,11 +24,11 @@ static int g_last_mouse_y;
 extern GLuint g_window_w;
 extern GLuint g_window_h;
 
-
 //////////////////////////////////////////////////////////////////////
 // Camera 
 //////////////////////////////////////////////////////////////////////
 static Camera g_camera;
+
 
 //////////////////////////////////////////////////////////////////////
 //// Define Shader Programs
@@ -34,11 +36,6 @@ static Camera g_camera;
 GLuint s_program_id;
 
 
-
-//////////////////////////////////////////////////////////////////////
-//// Animation Parameters
-//////////////////////////////////////////////////////////////////////
-float g_elaped_time_s = 0.f;	// 
 
 
 
@@ -54,7 +51,7 @@ void InitOpenGL()
 	//// 3. Shader Programs 등록
 	////    Ref: https://www.khronos.org/opengl/wiki/Shader_Compilation
 	//////////////////////////////////////////////////////////////////////////////////////
-	s_program_id = CreateFromFiles("../RotatingCube3/v_shader.glsl", "../RotatingCube3/f_shader.glsl");
+	s_program_id = CreateFromFiles("../Shaders/v_shader.glsl", "../Shaders/f_shader.glsl");
 	glUseProgram(s_program_id);
 
 
@@ -71,18 +68,19 @@ void InitOpenGL()
 	// 카메라 초기 위치 설정한다.
 	g_camera.lookAt(glm::vec3(3.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
-
 	////////////////////////////////////////////////////////////////////////////////////
 	//// 5. VAO, VBO 생성
 	////    Ref: https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object
 	///////////////////////////////////////////////////////////////////////////////////
+	
+	// basic meshes
+	InitBasicShapeObjs();
 
-	// Cube VAO 생성
-	InitCube();
+	// Tree
+	InitTreeModel();
 
 	// 바닥 격자 VAO 생성
 	InitGround();
-
 }
 
 
@@ -99,7 +97,8 @@ ClearOpenGLResource: 프로그램이 끝나기 메모리 해제를 위해 한 번 호출되는 함수. (
 void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
-	DeleteCube();
+	DeleteBasicShapeObjs();
+	DeleteTreeModel();
 }
 
 
@@ -142,78 +141,38 @@ void Display()
 
 
 	// Projection Transform Matrix 설정.
-	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w/g_window_h, 0.01f, 10000.f);
+	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
 	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
 	// Camera Transform Matrix 설정.
-	//glm::mat4 view_matrix = glm::lookAt(glm::vec3(0.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-	//glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
+	glm::mat4 view_matrix = glm::lookAt(glm::vec3(0.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(g_camera.GetGLViewMatrix()));
-
 
 	// 바닥 격자
 	glm::mat4 T0(1.f); // 단위 행렬
 	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T0));
-	
 	DrawGround();
 
 
-	//// 큐브 1.
-	glm::mat4 T1 = glm::rotate( glm::radians(360.f*g_elaped_time_s), glm::vec3(0.f, 1.f, 0.f));		// y축 중심으로 1초에 한바퀴(360도) 회전
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T1));
-	
-	DrawCube();
+	// 나무
+	for (int i = 0; i <= 5; i++)
+	for (int j = 0; j <= 5; j++)
+	{
+		glm::mat4 model_T;
+		model_T = glm::translate(glm::vec3(i * 2.f - 5.f, 0.f, j * 2.f - 5.f));
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
+		DrawTreeModel();
+	}
 
 
-	//// 큐브 2.
-	glm::mat4 trans_x = glm::translate(glm::vec3(1.0f, 0.5f, 0.f));
-	glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-	glm::mat4 T2 = T1 * trans_x * scale_half;
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T2));
-
-	DrawCube();
-
-
-	//// 큐브 3.
-	glm::mat4 T3 = trans_x * T1 * scale_half;
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T3));
-	
-	DrawCube();
-
-
-	//// 큐브 4.
-	glm::mat4 trans_y = glm::translate(glm::vec3(-1.0f, 0.5f*sin(g_elaped_time_s), 0.f));
-	glm::mat4 T4 = trans_y * T1 * scale_half;
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T4));
-
-	DrawCube();
-
-
-	// flipping the float buffers
+	// flipping the double buffers
 	// glutSwapBuffers는 항상 Display 함수 가장 아래 부분에서 한 번만 호출되어야한다.
 	glutSwapBuffers();
 }
 
 
 
-/**
-Timer: 지정된 시간 후에 자동으로 호출되는 callback 함수.
-ref: https://www.opengl.org/resources/libraries/glut/spec3/node64.html#SECTION000819000000000000000
-*/
-void Timer(int value)
-{
-	// Timer 호출 시간 간격을 누적하여, 최초 Timer가 호출된 후부터 현재까지 흘러간 계산한다.
-	g_elaped_time_s += value/1000.f;
 
-	// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
-	// 결과적으로 Display() 함수가 호출 된다.
-	glutPostRedisplay();
-
-	// 1/60 초 후에 Timer 함수가 다시 호출되로록 한다.
-	// Timer 함수 가 동일한 시간 간격으로 반복 호출되게하여,
-	// 애니메이션 효과를 표현할 수 있다
-	glutTimerFunc((unsigned int)(1000 / 60), Timer, (1000 / 60));
-}
 
 
 
@@ -273,8 +232,6 @@ void Keyboard(unsigned char key, int x, int y)
 		glutPostRedisplay();
 	}
 }
-
-
 
 
 
