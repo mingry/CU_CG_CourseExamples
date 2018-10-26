@@ -95,6 +95,7 @@ void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
 	DeleteCarModel();
+	DeleteGround();
 }
 
 

@@ -29,7 +29,7 @@ void InitCarModel()
 	g_car_mesh.ScaleUniformlyVertices(0.01f);
 	g_car_mesh.RotateVertices(-1*glm::pi<float>()/2, glm::vec3(1, 0, 0));
 	g_car_mesh.RotateVertices(glm::pi<float>(), glm::vec3(0, 1, 0));
-	g_car_mesh.SetColor(0.5f, 0.8f, 0.1f, 1);
+	g_car_mesh.SetColor(0.3f, 0.6f, 0.9f, 1);
 
 	// Vertex Array Object
 	glGenVertexArrays(1, &g_car_vao);

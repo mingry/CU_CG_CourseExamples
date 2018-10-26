@@ -5,11 +5,13 @@
 #include "GL/freeglut.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include "BasicShapesApp.h"
+#include "CarGame0App.h"
 #include "../BaseCodes/Camera.h"
-#include "../BaseCodes/GroundObj.h"
+#include "../BaseCodes/GroundObj2.h"
 #include "../BaseCodes/InitShader.h"
 #include "../BaseCodes/BasicShapeObjs.h"
+#include "CarModel.h"
+#include "TreeModel0.h"
 
 
 
@@ -35,6 +37,21 @@ static Camera g_camera;
 GLuint s_program_id;
 
 
+
+//////////////////////////////////////////////////////////////////////
+//// Animation Parameters
+//////////////////////////////////////////////////////////////////////
+float g_elaped_time_s = 0.f;	// 
+
+
+//////////////////////////////////////////////////////////////////////
+//// Car Position, Rotation, Velocity
+//// 자동차 제어 변수들.
+//////////////////////////////////////////////////////////////////////
+glm::vec3 g_car_poisition(0.f, 0.f, 0.f); //위치
+float g_car_speed = 0;			          // 속도 (초당 이동 거리)
+float g_car_rotation_y = 0;		          // 현재 방향 (y축 회전)
+float g_car_angular_speed = 0;	          // 회전 속도 (각속도 - 초당 회전 각)
 
 
 
@@ -75,8 +92,14 @@ void InitOpenGL()
 	// basic meshes
 	InitBasicShapeObjs();
 
+	// Tree
+	InitTreeModel();
+
+	// Car
+	InitCarModel();
+
 	// 바닥 격자 VAO 생성
-	InitGround();
+	InitGround2();
 }
 
 
@@ -94,7 +117,9 @@ void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
 	DeleteBasicShapeObjs();
-	DeleteGround();
+	DeleteTreeModel();
+	DeleteCarModel();
+	DeleteGround2();
 }
 
 
@@ -147,33 +172,28 @@ void Display()
 	// 바닥 격자
 	glm::mat4 T0(1.f); // 단위 행렬
 	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T0));
+	DrawGround2();
 
-	DrawGround();
 
-	// 1. box
-	DrawBox();
+	// Moving Car
+	{
+		glm::mat4 car_T = glm::translate(g_car_poisition) * glm::rotate(g_car_rotation_y, glm::vec3(0.f, 1.f, 0.f));
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(car_T));
+		DrawCarModel();
+	}
 
-	// 2. sphere
-	glm::mat4 T = glm::translate(glm::vec3(-2.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawSphere();
+	// 나무
+	for (int i = 0; i <= 5; i++)
+	for (int j = 0; j <= 5; j++)
+	{
+		glm::mat4 model_T;
+		model_T = glm::translate(glm::vec3(i * 2.f - 5.f, 0.f, j * 2.f - 5.f));
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
+		DrawTreeModel();
+	}
 
-	// 3. hemisphere
-	T = glm::translate(glm::vec3(-4.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawHemisphere();
-
-	// 4. Cylinder
-	T = glm::translate(glm::vec3(2.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawCylinder();
-
-	// 5. Capsule
-	T = glm::translate(glm::vec3(4.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawCapsule();
 	
-	
+
 
 	// flipping the double buffers
 	// glutSwapBuffers는 항상 Display 함수 가장 아래 부분에서 한 번만 호출되어야한다.
@@ -181,7 +201,36 @@ void Display()
 }
 
 
+/**
+Timer: 지정된 시간 후에 자동으로 호출되는 callback 함수.
+ref: https://www.opengl.org/resources/libraries/glut/spec3/node64.html#SECTION000819000000000000000
+*/
+void Timer(int value)
+{
+	// Timer 호출 시간 간격을 누적하여, 최초 Timer가 호출된 후부터 현재까지 흘러간 계산한다.
+	g_elaped_time_s += value/1000.f;
 
+
+	// Turn
+	g_car_rotation_y += g_car_angular_speed;
+
+	// Calculate Velocity
+	glm::vec3 speed_v = glm::vec3(0.f, 0.f, g_car_speed);
+	glm::vec3 velocity = glm::rotateY(speed_v, g_car_rotation_y);	// speed_v 를 y축을 기준으로 g_car_rotation_y 만큼 회전한다.
+
+	// Move
+	g_car_poisition += velocity;
+
+
+	// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
+	// 결과적으로 Display() 함수가 호출 된다.
+	glutPostRedisplay();
+
+	// 1/60 초 후에 Timer 함수가 다시 호출되로록 한다.
+	// Timer 함수 가 동일한 시간 간격으로 반복 호출되게하여,
+	// 애니메이션 효과를 표현할 수 있다
+	glutTimerFunc((unsigned int)(1000 / 60), Timer, (1000 / 60));
+}
 
 
 
@@ -212,35 +261,65 @@ ref: https://www.opengl.org/resources/libraries/glut/spec3/node49.html#SECTION00
 */
 void Keyboard(unsigned char key, int x, int y)
 {
-	// keyboard '1' 이 눌려졌을 때.
-	if (key == '1')
+	switch (key)						
 	{
-		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
-		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
-
-		// 'shading_mode' 값으로 1을 설정.
-		glUniform1i(shading_mode_loc, 1);
-
-
-		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
-		// 결과적으로 Display() 함수를 호출하게 된다.
+	case 's':
+		g_car_speed = -0.01f;		// 후진 속도 설정
 		glutPostRedisplay();
+		break;
+
+	case 'w':
+		g_car_speed = 0.01f;		// 전진 속도 설정
+		glutPostRedisplay();
+		break;
+
+	case 'a':
+		g_car_angular_speed = glm::radians( 1.f );		// 좌회전 각속도 설정
+		glutPostRedisplay();
+		break;
+
+	case 'd':
+		g_car_angular_speed = -1 * glm::radians( 1.f );		//  우회전 각속도 설정
+		glutPostRedisplay();
+		break;
+
 	}
 
-	// keyboard '2' 가 눌려졌을 때.
-	else if (key == '2')
+}
+
+/**
+KeyboardUp: 눌려졌던 키가 놓여질 때마다 자동으로 호출되는 함수.
+@param key는 해당 키보드의 문자값.
+@param x,y는 현재 마우스 포인터의 좌표값.
+ref: https://www.opengl.org/resources/libraries/glut/spec3/node49.html#SECTION00084000000000000000
+
+*/
+void KeyboardUp(unsigned char key, int x, int y)
+{
+	switch (key)						
 	{
-		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
-		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
-
-		// 'shading_mode' 값으로 2를 설정.
-		glUniform1i(shading_mode_loc, 2);
-
-
-		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
-		// 결과적으로 Display() 함수를 호출하게 된다.
+	case 's':
+		g_car_speed = 0.f;		// 후진 속도 설정
 		glutPostRedisplay();
+		break;
+
+	case 'w':
+		g_car_speed = 0.f;		// 전진 속도 설정
+		glutPostRedisplay();
+		break;
+
+	case 'a':
+		g_car_angular_speed = 0.f;		// 좌회전 각속도 설정
+		glutPostRedisplay();
+		break;
+
+	case 'd':
+		g_car_angular_speed = 0.f;		//  우회전 각속도 설정
+		glutPostRedisplay();
+		break;
+
 	}
+
 }
 
 

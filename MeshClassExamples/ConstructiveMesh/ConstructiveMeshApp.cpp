@@ -99,6 +99,7 @@ void ClearOpenGLResource()
 	// Delete (VAO, VBO)
 	DeleteBasicShapeObjs();
 	DeleteTreeModel();
+	DeleteGround();
 }
 
 
@@ -155,14 +156,9 @@ void Display()
 
 
 	// ³ª¹«
-	for (int i = 0; i <= 5; i++)
-	for (int j = 0; j <= 5; j++)
-	{
-		glm::mat4 model_T;
-		model_T = glm::translate(glm::vec3(i * 2.f - 5.f, 0.f, j * 2.f - 5.f));
-		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
-		DrawTreeModel();
-	}
+	glm::mat4 model_T(1.f);
+	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
+	DrawTreeModel();
 
 
 	// flipping the double buffers

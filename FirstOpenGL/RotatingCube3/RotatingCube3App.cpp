@@ -100,6 +100,7 @@ void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
 	DeleteCube();
+	DeleteGround();
 }
 
 
