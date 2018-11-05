@@ -21,7 +21,6 @@ static bool g_right_button_pushed;
 static int g_last_mouse_x;
 static int g_last_mouse_y;
 
-// Window 
 extern GLuint g_window_w;
 extern GLuint g_window_h;
 
