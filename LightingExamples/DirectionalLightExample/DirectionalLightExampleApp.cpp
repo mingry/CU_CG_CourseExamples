@@ -1,15 +1,14 @@
 
-
-
 #include "GL/glew.h"
 #include "GL/freeglut.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include "BasicShapesApp.h"
 #include "../BaseCodes/Camera.h"
-#include "../BaseCodes/GroundObj.h"
+#include "../BaseCodes/GroundObj2.h"
 #include "../BaseCodes/InitShader.h"
 #include "../BaseCodes/BasicShapeObjs.h"
+#include "DirectionalLightExampleApp.h"
+
 
 
 
@@ -19,7 +18,6 @@ static bool g_right_button_pushed;
 static int g_last_mouse_x;
 static int g_last_mouse_y;
 
-// Window 
 extern GLuint g_window_w;
 extern GLuint g_window_h;
 
@@ -46,40 +44,21 @@ OpenGL에 관련한 초기 값과 프로그램에 필요한 다른 초기 값을 설정한다.
 */
 void InitOpenGL()
 {
-	//////////////////////////////////////////////////////////////////////////////////////
-	//// 3. Shader Programs 등록
-	////    Ref: https://www.khronos.org/opengl/wiki/Shader_Compilation
-	//////////////////////////////////////////////////////////////////////////////////////
-	s_program_id = CreateFromFiles("../Shaders/v_shader.glsl", "../Shaders/f_shader.glsl");
+	s_program_id = CreateFromFiles("../Shaders/vshader_DirectionalLight.glsl", "../Shaders/fshader_DirectionalLight.glsl");
 	glUseProgram(s_program_id);
-
-
-
-	////////////////////////////////////////////////////////////////////////////////////
-	//// 4. OpenGL 설정
-	//////////////////////////////////////////////////////////////////////////////////////
+	
 	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
 
-	// Initial State of Camera
-	// 카메라 초기 위치 설정한다.
-	g_camera.lookAt(glm::vec3(3.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+	g_camera.lookAt(glm::vec3(0.f, 5.f, 6.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
-	////////////////////////////////////////////////////////////////////////////////////
-	//// 5. VAO, VBO 생성
-	////    Ref: https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object
-	///////////////////////////////////////////////////////////////////////////////////
-	
-	// basic meshes
+
+	//  meshes
 	InitBasicShapeObjs();
-
-	// 바닥 격자 VAO 생성
-	InitGround();
+	InitGround2();
 }
-
-
 
 
 
@@ -93,10 +72,9 @@ ClearOpenGLResource: 프로그램이 끝나기 메모리 해제를 위해 한 번 호출되는 함수. (
 void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
+	DeleteGround2();
 	DeleteBasicShapeObjs();
-	DeleteGround();
 }
-
 
 
 
@@ -126,14 +104,16 @@ void Display()
 {
 	// 전체 화면을 지운다.
 	// glClear는 Display 함수 가장 윗 부분에서 한 번만 호출되어야한다.
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 
 	// Vertex shader 의 matrix 변수들의 location을 받아온다.
 	int m_proj_loc = glGetUniformLocation(s_program_id, "proj_matrix");
 	int m_view_loc = glGetUniformLocation(s_program_id, "view_matrix");
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
+
 
 
 	// Projection Transform Matrix 설정.
@@ -144,52 +124,68 @@ void Display()
 	glm::mat4 view_matrix = g_camera.GetGLViewMatrix();
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
-	// 바닥 격자
-	glm::mat4 T0(1.f); // 단위 행렬
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T0));
-
-	DrawGround();
 
 
-	
-	// Mesh Class의 Basic Shapes은 vertex color값이 없기 때문에 vs_color 변수의 default 값을 사용하여 그리게된다.
-	// 아래 함수는 vertex shader 의 "layout (location=2) in vec4 vs_color;" 변수에 대한 default 값을 설정하는 함수이다.
-	glVertexAttrib4f(2, 0.0f, 0.f, 1.f, 1.f);
-	// 위 함수의 결과 아래부터 그려지는 basic shape 들은 보두 파란색이 된다.
+	// Directional Light 설정
+	{
+		// 빛의 방향 설정.
+		glm::vec3 light_dir(-1.f, -1.f, 0.f);
+		light_dir = glm::normalize(light_dir);
 
-	//// 1. box
-	DrawBox();
+		// Apply Camera Matrices.
+		////// *** 현재 카메라 방향을 고려하기 위해 view transform 적용  ***
+		//  light_dir는 방향을 나타내는 벡터이므로 이동(Translation)변환은 무시되도록 한다. (네 번째 요소 0.f으로 셋팅)
+		light_dir = glm::vec3(  view_matrix * glm::vec4(light_dir, 0.f) );
 
-	//// 2. sphere
-	glm::mat4 T = glm::translate(glm::vec3(-2.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawSphere();
-
-	//// 3. hemisphere
-	T = glm::translate(glm::vec3(-4.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawHemisphere();
-
-	//// 4. Cylinder
-	T = glm::translate(glm::vec3(2.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawCylinder();
+		int light_dir_loc = glGetUniformLocation(s_program_id, "light_dir");
+		glUniform3f(light_dir_loc, light_dir[0], light_dir[1], light_dir[2]);
+	}
 
 
-	//// 5. Capsule
-	// vertex shader의 vs_color 변수의 default 값을 변경한다.
-	// 그결과 capsule은 빨간색이된다.
-	glVertexAttrib4f(2, 1.0f, 0.f, 0.f, 1.f);
-	T = glm::translate(glm::vec3(4.f, 0.f, 0.f));
-	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T));
-	DrawCapsule();
-	
-	
 
-	// flipping the double buffers
-	// glutSwapBuffers는 항상 Display 함수 가장 아래 부분에서 한 번만 호출되어야한다.
+	// Ground
+	{
+		// Ground를 위한 Phong Shading 관련 변수 값을 설정한다.
+		int shininess_loc = glGetUniformLocation(s_program_id, "shininess_n");
+		glUniform1f(shininess_loc, 50.f);
+
+		int K_s_loc = glGetUniformLocation(s_program_id, "K_s");
+		glUniform3f(K_s_loc, 0.3f, 0.3f, 0.3f);
+
+		// 변환 행렬을 설정한다.
+		glm::mat4 model_T(1.f);	//단위행렬
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(model_T));
+
+		// 그린다.
+		DrawGround2();
+	}
+
+	// Sphere
+	{
+		// Sphere를 위한 Phong Shading 관련 변수 값을 설정한다.
+		int shininess_loc = glGetUniformLocation(s_program_id, "shininess_n");
+		glUniform1f(shininess_loc, 100.f);
+
+		int K_s_loc = glGetUniformLocation(s_program_id, "K_s");
+		glUniform3f(K_s_loc, 0.7f, 0.7f, 0.7f);
+
+		// 변환 행렬을 설정한다.
+		glm::mat4 model_T;
+		model_T = glm::translate(glm::vec3(0.f, 1.f, 0.f)) * glm::scale(glm::vec3(0.8f, 0.8f, 0.8f));
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(model_T));
+
+		// 전체 꼭지점에 적용될 Color 값을 설정한다. 
+		glVertexAttrib4f(2, 0.3f, 0.6f, 0.9f, 1.f);
+
+		// 구를 그린다.
+		DrawSphere();
+	}
+
 	glutSwapBuffers();
 }
+
+
+
 
 
 
@@ -214,60 +210,26 @@ void Reshape(int w, int h)
 	glutPostRedisplay();
 }
 
-/**
-Keyboard: 키보드 입력이 있을 때마다 자동으로 호출되는 함수.
-@param key는 눌려진 키보드의 문자값.
-@param x,y는 현재 마우스 포인터의 좌표값.
-ref: https://www.opengl.org/resources/libraries/glut/spec3/node49.html#SECTION00084000000000000000
-
-*/
-void Keyboard(unsigned char key, int x, int y)
-{
-	// keyboard '1' 이 눌려졌을 때.
-	if (key == '1')
-	{
-		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
-		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
-
-		// 'shading_mode' 값으로 1을 설정.
-		glUniform1i(shading_mode_loc, 1);
 
 
-		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
-		// 결과적으로 Display() 함수를 호출하게 된다.
-		glutPostRedisplay();
-	}
-
-	// keyboard '2' 가 눌려졌을 때.
-	else if (key == '2')
-	{
-		// Fragment shader에 정의 되어있는 'shading_mode' 변수의 location을 받아온다.
-		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
-
-		// 'shading_mode' 값으로 2를 설정.
-		glUniform1i(shading_mode_loc, 2);
 
 
-		// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
-		// 결과적으로 Display() 함수를 호출하게 된다.
-		glutPostRedisplay();
-	}
-}
-
+/////////////////////////////////////////////////////////////////////////////////////////
+/// Keyboard and Mouse Input
 
 
 /**
 Mouse: 마우스 버튼이 입력될 때마다 자동으로 호출되는 함수.
 파라메터의 의미는 다음과 같다.
 @param button: 사용된 버튼의 종류
-  GLUT_LEFT_BUTTON - 왼쪽 버튼
-  GLUT_RIGHT_BUTTON - 오른쪽 버튼
-  GLUT_MIDDLE_BUTTON - 가운데 버튼 (휠이 눌러졌을 때)
-  3 - 마우스 휠 (휠이 위로 돌아 갔음).
-  4 - 마우스 휠 (휠이 아래로 돌아 갔음).
+GLUT_LEFT_BUTTON - 왼쪽 버튼
+GLUT_RIGHT_BUTTON - 오른쪽 버튼
+GLUT_MIDDLE_BUTTON - 가운데 버튼 (휠이 눌러졌을 때)
+3 - 마우스 휠 (휠이 위로 돌아 갔음).
+4 - 마우스 휠 (휠이 아래로 돌아 갔음).
 @param state: 조작 상태
-  GLUT_DOWN - 눌러 졌음
-  GLUT_UP - 놓여졌음
+GLUT_DOWN - 눌러 졌음
+GLUT_UP - 놓여졌음
 @param x,y: 조작이 일어났을 때, 마우스 포인터의 좌표값.
 */
 void Mouse(int button, int state, int x, int y)
@@ -333,3 +295,14 @@ void MouseMotion(int x, int y)
 	g_last_mouse_x = x;
 	g_last_mouse_y = y;
 }
+
+
+
+
+
+
+
+
+
+
+
