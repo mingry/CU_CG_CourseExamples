@@ -29,6 +29,7 @@ extern GLuint g_window_h;
 // Camera 
 //////////////////////////////////////////////////////////////////////
 static Camera g_camera;
+static int g_camera_mode = 0;
 
 
 //////////////////////////////////////////////////////////////////////
@@ -52,6 +53,9 @@ glm::vec3 g_car_poisition(0.f, 0.f, 0.f); //위치
 float g_car_speed = 0;			          // 속도 (초당 이동 거리)
 float g_car_rotation_y = 0;		          // 현재 방향 (y축 회전)
 float g_car_angular_speed = 0;	          // 회전 속도 (각속도 - 초당 회전 각)
+
+
+
 
 
 
@@ -154,6 +158,7 @@ void Display()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
 
 	// Vertex shader 의 matrix 변수들의 location을 받아온다.
 	int m_proj_loc = glGetUniformLocation(s_program_id, "proj_matrix");
@@ -161,19 +166,33 @@ void Display()
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
 
 
-	// Projection Transform Matrix 설정.
-	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
-	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
+	if ( g_camera_mode == 1 )// Top view
+	{
+		// Projection Transform Matrix 설정.
+		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
+		glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
-	// Camera Transform Matrix 설정.
-	glm::mat4 view_matrix = glm::lookAt(glm::vec3(0.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(g_camera.GetGLViewMatrix()));
+		// Camera Transform Matrix 설정.
+		glm::mat4 view_matrix = glm::lookAt(glm::vec3(0.f, 13.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f));
+		glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
+	}
+	else
+	{
+		// Projection Transform Matrix 설정.
+		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
+		glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
+
+		// Camera Transform Matrix 설정.
+		glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(g_camera.GetGLViewMatrix()));
+	}
+
 
 	// 바닥 격자
 	glm::mat4 T0(1.f); // 단위 행렬
 	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T0));
 	DrawGround2();
 
+	
 
 	// Moving Car
 	{
@@ -184,16 +203,17 @@ void Display()
 
 	// 나무
 	for (int i = 0; i <= 5; i++)
-	for (int j = 0; j <= 5; j++)
 	{
-		glm::mat4 model_T;
-		model_T = glm::translate(glm::vec3(i * 2.f - 5.f, 0.f, j * 2.f - 5.f));
-		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
-		DrawTreeModel();
+		for (int j = 0; j <= 5; j++)
+		{
+			glm::mat4 model_T;
+			model_T = glm::translate(glm::vec3(i * 2.f - 5.f, 0.f, j * 2.f - 5.f));
+			glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
+			DrawTreeModel();
+		}
 	}
 
 	
-
 
 	// flipping the double buffers
 	// glutSwapBuffers는 항상 Display 함수 가장 아래 부분에서 한 번만 호출되어야한다.
@@ -280,6 +300,16 @@ void Keyboard(unsigned char key, int x, int y)
 
 	case 'd':
 		g_car_angular_speed = -1 * glm::radians( 1.f );		//  우회전 각속도 설정
+		glutPostRedisplay();
+		break;
+
+	case '1':
+		g_camera_mode = 0;
+		glutPostRedisplay();
+		break;
+
+	case '2':
+		g_camera_mode = 1;
 		glutPostRedisplay();
 		break;
 

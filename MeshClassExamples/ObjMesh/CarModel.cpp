@@ -27,8 +27,8 @@ void InitCarModel()
 	g_car_mesh.TriangulateAndUniformizeBuffers();
 
 	g_car_mesh.ScaleUniformlyVertices(0.01f);
-	g_car_mesh.RotateVertices(-1*glm::pi<float>()/2, glm::vec3(1, 0, 0));
-	g_car_mesh.RotateVertices(glm::pi<float>(), glm::vec3(0, 1, 0));
+	g_car_mesh.RotateVertices(glm::radians(-90.f), glm::vec3(1, 0, 0));
+	g_car_mesh.RotateVertices(glm::radians(180.f), glm::vec3(0, 1, 0));
 	g_car_mesh.SetColor(0.5f, 0.8f, 0.1f, 1);
 
 	// Vertex Array Object
