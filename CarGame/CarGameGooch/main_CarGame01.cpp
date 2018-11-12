@@ -4,7 +4,7 @@
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 
-#include "CarGame0App.h"
+#include "CarGameGoochApp.h"
 
 
 GLuint g_window_w = 800;
@@ -17,7 +17,6 @@ int main(int argc, char** argv)
 {
 
 	glutInit(&argc, argv);
-	
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(g_window_w, g_window_h);
 	glutCreateWindow("Computer Graphics");
@@ -42,6 +41,7 @@ int main(int argc, char** argv)
 	{
 		std::cout << "GLEW OK\n";
 	}
+
 
 
 	InitOpenGL();

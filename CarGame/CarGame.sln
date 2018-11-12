@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarGame0", "CarGame0\CarGame0.vcxproj", "{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarGameGooch", "CarGameGooch\CarGameGooch.vcxproj", "{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarGameTexture", "CarGameTexture\CarGameTexture.vcxproj", "{E9142114-63B1-4331-A633-485AF330E5AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +25,22 @@ Global
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x64.Build.0 = Release|x64
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x86.ActiveCfg = Release|Win32
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x86.Build.0 = Release|Win32
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Debug|x64.ActiveCfg = Debug|x64
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Debug|x64.Build.0 = Debug|x64
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Debug|x86.Build.0 = Debug|Win32
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Release|x64.ActiveCfg = Release|x64
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Release|x64.Build.0 = Release|x64
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Release|x86.ActiveCfg = Release|Win32
+		{DAAA4EC2-16FB-4C36-B160-CC8F5602189B}.Release|x86.Build.0 = Release|Win32
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Debug|x64.ActiveCfg = Debug|x64
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Debug|x64.Build.0 = Debug|x64
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Debug|x86.ActiveCfg = Debug|Win32
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Debug|x86.Build.0 = Debug|Win32
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Release|x64.ActiveCfg = Release|x64
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Release|x64.Build.0 = Release|x64
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Release|x86.ActiveCfg = Release|Win32
+		{E9142114-63B1-4331-A633-485AF330E5AC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

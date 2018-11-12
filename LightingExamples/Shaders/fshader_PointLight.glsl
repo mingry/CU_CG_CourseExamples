@@ -40,6 +40,6 @@ void main()
 
 	color.rgb = ambient + diffuse + specular;
 	color.rgb = min(vec3(1.f, 1.f, 1.f), color.rgb);
-	color.a = 1.0f;
+	color.a = fs_color.a;
 }
 

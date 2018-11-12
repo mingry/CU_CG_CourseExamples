@@ -4,7 +4,8 @@
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
 
-#include "CarGame0App.h"
+#include "CarGameTextureApp.h"
+#include "IL/ilu.h"
 
 
 GLuint g_window_w = 800;
@@ -15,6 +16,9 @@ GLuint g_window_h = 600;
 
 int main(int argc, char** argv)
 {
+
+	ilInit();
+	iluInit();
 
 	glutInit(&argc, argv);
 	
@@ -31,7 +35,6 @@ int main(int argc, char** argv)
 	glutTimerFunc((unsigned int)(1000 /60), Timer, (1000 / 60));
 
 
-
 	glewExperimental = GL_TRUE;
 	if ( glewInit() != GLEW_OK )
 	{
@@ -42,7 +45,6 @@ int main(int argc, char** argv)
 	{
 		std::cout << "GLEW OK\n";
 	}
-
 
 	InitOpenGL();
 

@@ -7,7 +7,6 @@
 #include "../BaseCodes/Mesh.h"
 #include "CarModel.h"
 
-extern int g_shader_id;
 
 ///////////////////////////////////////////////
 // Two-Triangle
