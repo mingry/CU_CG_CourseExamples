@@ -5,6 +5,10 @@ Release
 */.vs
 */Include/GL/
 */Include/glm/
+*/Include/IL/
 */Lib/glew32.lib
 */Lib/freeglut.lib
+*/Lib/DevIL.lib
+*/Lib/ILU.lib
+*/Lib/ILUT.lib
 HW_Examples
