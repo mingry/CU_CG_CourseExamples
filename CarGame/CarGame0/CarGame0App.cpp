@@ -66,18 +66,10 @@ OpenGL에 관련한 초기 값과 프로그램에 필요한 다른 초기 값을 설정한다.
 */
 void InitOpenGL()
 {
-	//////////////////////////////////////////////////////////////////////////////////////
-	//// 3. Shader Programs 등록
-	////    Ref: https://www.khronos.org/opengl/wiki/Shader_Compilation
-	//////////////////////////////////////////////////////////////////////////////////////
 	s_program_id = CreateFromFiles("../Shaders/v_shader.glsl", "../Shaders/f_shader.glsl");
 	glUseProgram(s_program_id);
 
 
-
-	////////////////////////////////////////////////////////////////////////////////////
-	//// 4. OpenGL 설정
-	//////////////////////////////////////////////////////////////////////////////////////
 	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -87,11 +79,6 @@ void InitOpenGL()
 	// 카메라 초기 위치 설정한다.
 	g_camera.lookAt(glm::vec3(3.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
-	////////////////////////////////////////////////////////////////////////////////////
-	//// 5. VAO, VBO 생성
-	////    Ref: https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object
-	///////////////////////////////////////////////////////////////////////////////////
-	
 	// basic meshes
 	InitBasicShapeObjs();
 
@@ -165,24 +152,43 @@ void Display()
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
 
 
+	glm::mat4 projection_matrix;
+	glm::mat4 view_matrix;
+
 	if ( g_camera_mode == 1 )// Top view
 	{
 		// Projection Transform Matrix 설정.
-		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
+		projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
 		glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
 		// Camera Transform Matrix 설정.
-		glm::mat4 view_matrix = glm::lookAt(glm::vec3(0.f, 13.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f));
+		view_matrix = glm::lookAt(glm::vec3(0.f, 13.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f));
 		glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
 	}
 	else
 	{
 		// Projection Transform Matrix 설정.
-		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
+		projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
 		glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
 		// Camera Transform Matrix 설정.
-		glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(g_camera.GetGLViewMatrix()));
+		view_matrix = g_camera.GetGLViewMatrix();
+		glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
+	}
+
+	// Directional Light 설정
+	{
+		// 빛의 방향 설정.
+		glm::vec3 light_dir(-1.f, -1.f, -1.f);
+		light_dir = glm::normalize(light_dir);
+
+		// Apply Camera Matrices.
+		////// *** 현재 카메라 방향을 고려하기 위해 view transform 적용  ***
+		//  light_dir는 방향을 나타내는 벡터이므로 이동(Translation)변환은 무시되도록 한다. (네 번째 요소 0.f으로 셋팅)
+		light_dir = glm::vec3(  view_matrix * glm::vec4(light_dir, 0.f) );
+
+		int light_dir_loc = glGetUniformLocation(s_program_id, "light_dir");
+		glUniform3f(light_dir_loc, light_dir[0], light_dir[1], light_dir[2]);
 	}
 
 

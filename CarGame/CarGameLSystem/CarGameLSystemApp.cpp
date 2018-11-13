@@ -5,12 +5,13 @@
 #include "GL/freeglut.h"
 #include "glm/glm.hpp"
 #include "glm/ext.hpp"
-#include "CarGameGoochApp.h"
+#include "CarGameLSystemApp.h"
 #include "../BaseCodes/Camera.h"
 #include "../BaseCodes/GroundObj2.h"
 #include "../BaseCodes/InitShader.h"
 #include "../BaseCodes/BasicShapeObjs.h"
-#include "CarModel01.h"
+#include "CarModel.h"
+#include "TreeModelL.h"
 
 
 
@@ -64,19 +65,24 @@ OpenGL에 관련한 초기 값과 프로그램에 필요한 다른 초기 값을 설정한다.
 */
 void InitOpenGL()
 {
-	s_program_id = CreateFromFiles("../Shaders/v_shader_gooch.glsl", "../Shaders/f_shader_gooch.glsl");
+	s_program_id = CreateFromFiles("../Shaders/v_shader.glsl", "../Shaders/f_shader.glsl");
 	glUseProgram(s_program_id);
 
 	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+
 	// Initial State of Camera
 	// 카메라 초기 위치 설정한다.
 	g_camera.lookAt(glm::vec3(3.f, 2.f, 3.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 
+	
 	// basic meshes
 	InitBasicShapeObjs();
+
+	// Tree
+	InitTreeModel();
 
 	// Car
 	InitCarModel();
@@ -100,6 +106,7 @@ void ClearOpenGLResource()
 {
 	// Delete (VAO, VBO)
 	DeleteBasicShapeObjs();
+	DeleteTreeModel();
 	DeleteCarModel();
 	DeleteGround2();
 }
@@ -144,19 +151,22 @@ void Display()
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
 
 
+	glm::mat4 projection_matrix;
+	glm::mat4 view_matrix;
+
+	
 	// Projection Transform Matrix 설정.
-	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
+	projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
 	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
 	// Camera Transform Matrix 설정.
-	glm::mat4 view_matrix = g_camera.GetGLViewMatrix();
+	view_matrix = g_camera.GetGLViewMatrix();
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
-
 
 	// Directional Light 설정
 	{
 		// 빛의 방향 설정.
-		glm::vec3 light_dir(-1.0f, -1.f, 1.f);
+		glm::vec3 light_dir(-1.f, -1.f, -1.f);
 		light_dir = glm::normalize(light_dir);
 
 		// Apply Camera Matrices.
@@ -183,32 +193,16 @@ void Display()
 		DrawCarModel();
 	}
 
-	// Spheres
-	float colors[8][3] = { 
-		{0.f, 0.f, 0.f} ,
-	{0.f, 0.f, 1.f} ,
-	{0.f, 1.f, 0.f} ,
-	{0.f, 1.f, 1.f} ,
-	{1.f, 0.f, 0.f} ,
-	{1.f, 0.f, 1.f} ,
-	{1.f, 1.f, 0.f} ,
-	{1.f, 1.f, 1.f}  };
-
-	int c = 0;
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 2; j++)
+	// 나무
+	for ( int i=0; i<=5; i++ )
+		for ( int j=0; j<=5; j++ )
 		{
-			glm::mat4 model_T;
-			model_T = glm::translate(glm::vec3(i * 2.f - 3.f, 0.5f, j * 2.f - 1.f))*glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-			glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(model_T));
+			glm::mat4 tree_T;
+			tree_T =  glm::translate(glm::vec3(i*2.f-5.f, 0.f, j*2.f-5.f));
+			glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(tree_T));
 
-			glVertexAttrib4f(2, colors[c][0], colors[c][1], colors[c][2], 1.f);
-			DrawSphere();
-		
-			c++;
+			DrawTreeModel((i+j)%NUM_TREES);
 		}
-	}
 
 	
 
@@ -300,7 +294,8 @@ void Keyboard(unsigned char key, int x, int y)
 		glutPostRedisplay();
 		break;
 
-	
+
+
 	}
 
 }
