@@ -148,7 +148,7 @@ void Display()
 
 
 		// Spot Light 변수 설정.
-		float light_cos_cutoff = cos( 15.f/180.f * glm::pi<float>() );
+		float light_cos_cutoff = cos( glm::radians(15.f) );
 		glm::vec3 light_indensity(1.0f, 0.0f, 0.0f);	// Red Light
 
 		int light_cos_cutoff_loc = glGetUniformLocation(s_program_id, "light_cos_cutoff");
