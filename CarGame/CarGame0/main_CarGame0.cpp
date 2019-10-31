@@ -18,8 +18,10 @@ int main(int argc, char** argv)
 
 	glutInit(&argc, argv);
 	
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowSize(g_window_w, g_window_h);
+	glutSetOption(GLUT_MULTISAMPLE, 8);
+	glEnable(GL_MULTISAMPLE);
 	glutCreateWindow("Computer Graphics");
 	
 	glutReshapeFunc(Reshape);

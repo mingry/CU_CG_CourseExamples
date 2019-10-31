@@ -173,9 +173,10 @@ Mesh::TransformVertices(const glm::mat4 &m)
 		point(i, v);
 	}
 
+	glm::mat4 m_it = glm::transpose(glm::inverse(m));
 	for (unsigned int i = 0; i < normals_.size(); i++)
 	{
-		v = glm::vec3(m*glm::vec4(normal(i), 0.f));
+		v = glm::vec3(m_it*glm::vec4(normal(i), 0.f));
 		v = glm::normalize(v);
 		normal(i, v);
 	}
