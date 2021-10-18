@@ -264,7 +264,7 @@ int main(int argc, char** argv)
 	//// A. 원통 모델링
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// A.1. first potion and normal
+	// A.1. The first position and normal
 	m_positions[0] = glm::vec3(0.5f, 0.f, 0.f);
 	m_normals[0] = glm::vec3(1.f, 0.f, 0.f);
 
@@ -293,7 +293,7 @@ int main(int argc, char** argv)
 			m_colors[i] = glm::vec4(0.f, 1.f, 1.f, 1.f);
 	}
 
-	// A.4. triangle indics 
+	// A.4. triangle indices 
 	for (int i = 0; i < g_num_triangles; i++)
 	{
 		int m = g_num_circle_vertices;
