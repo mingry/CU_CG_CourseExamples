@@ -9,9 +9,7 @@ extern GLuint s_program_id;
 
 ///////////////////////////////////////////////
 // Textures
-const char *g_texture_file = "../Data/road.raw";		// RGB
 ILuint g_image;
-
 unsigned int g_texture_id;
 void LoadTexture();
 
@@ -120,7 +118,7 @@ void LoadTexture()
 	ilBindImage(g_image);
 	iluLoadImage("../Data/road.jpg");
 	int img_w = ilGetInteger(IL_IMAGE_WIDTH);		// it must be a number of 2^n;
-	int img_h = ilGetInteger(IL_IMAGE_HEIGHT);	// it must same to the img_w;
+	int img_h = ilGetInteger(IL_IMAGE_HEIGHT);	// it must be same to the img_w;
 
 
 	glGenTextures(1, &g_texture_id);

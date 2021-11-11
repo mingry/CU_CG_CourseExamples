@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectionalLightExample", "DirectionalLightExample\DirectionalLightExample.vcxproj", "{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}"
 EndProject
@@ -22,7 +22,8 @@ Global
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Debug|x64.ActiveCfg = Debug|Win32
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Debug|x86.ActiveCfg = Debug|Win32
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Debug|x86.Build.0 = Debug|Win32
-		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x64.ActiveCfg = Release|Win32
+		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x64.ActiveCfg = Release|x64
+		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x64.Build.0 = Release|x64
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x86.ActiveCfg = Release|Win32
 		{E5AC1BB9-A4CE-435F-A76A-35E1D0F4931A}.Release|x86.Build.0 = Release|Win32
 		{5A785648-D66A-41FB-A51D-17491BF76521}.Debug|x64.ActiveCfg = Debug|x64
