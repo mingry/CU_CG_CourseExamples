@@ -16,7 +16,7 @@ out vec2 fs_uv;
 void main()
 {
 	gl_Position = proj_matrix * view_matrix * model_matrix * vec4(vs_position, 1.f);
-	fs_normal = inverse(transpose(mat3(view_matrix * model_matrix))) * vs_normal;
+	fs_normal = vec3(view_matrix * model_matrix * vec4(vs_normal, 0.f));
 	fs_color = vs_color;
 	fs_uv = vs_uv;
 }

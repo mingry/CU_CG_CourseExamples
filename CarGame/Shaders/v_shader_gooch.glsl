@@ -18,7 +18,7 @@ void main()
 	mat4 modelview = view_matrix * model_matrix;
 
 	gl_Position = proj_matrix * modelview * vec4(vs_position, 1.f);
-	fs_normal = inverse(transpose(mat3(view_matrix * model_matrix))) * vs_normal;
+	fs_normal = vec3(view_matrix * model_matrix * vec4(vs_normal, 0.f));
 	fs_eye_dir = vec3(modelview * vec4(vs_position, 1.f));	// Projection을 적용하지 않음.
 
 	fs_color = vs_color;
