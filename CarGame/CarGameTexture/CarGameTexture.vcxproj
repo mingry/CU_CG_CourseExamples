@@ -30,6 +30,7 @@
     <ClCompile Include="CarModel.cpp" />
     <ClCompile Include="GroundTexture.cpp" />
     <ClCompile Include="main_CarGameTexture.cpp" />
+    <ClCompile Include="MoonTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BaseCodes\BasicShapeObjs.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="CarGameTextureApp.h" />
     <ClInclude Include="CarModel.h" />
     <ClInclude Include="GroundTexture.h" />
+    <ClInclude Include="MoonTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\f_shader_texture.glsl" />

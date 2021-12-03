@@ -9,9 +9,9 @@ extern GLuint s_program_id;
 
 ///////////////////////////////////////////////
 // Textures
-ILuint g_image;
-unsigned int g_texture_id;
-void LoadTexture();
+static ILuint g_image;
+static unsigned int g_texture_id;
+static void LoadTexture();
 
 ///////////////////////////////////////////////
 // VAO and VBO
@@ -122,14 +122,7 @@ void LoadTexture()
 
 
 	glGenTextures(1, &g_texture_id);
-
 	glBindTexture(GL_TEXTURE_2D, g_texture_id);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img_w, img_h, 0, GL_RGB, GL_UNSIGNED_BYTE, ilGetData());
 
 	glGenerateMipmap(GL_TEXTURE_2D);

@@ -11,6 +11,7 @@
 #include "../BaseCodes/BasicShapeObjs.h"
 #include "CarModel.h"
 #include "GroundTexture.h"
+#include "MoonTexture.h"
 
 
 // Window and User Interface
@@ -82,8 +83,11 @@ void InitOpenGL()
 	// Car
 	InitCarModel();
 
-	// ¹Ù´Ú  VAO »ý¼º
+	// ¹Ù´Ú VAO »ý¼º
 	InitGroundTexture();
+
+	// Moon VAO »ý¼º
+	InitMoonTexture();
 }
 
 
@@ -103,6 +107,7 @@ void ClearOpenGLResource()
 	DeleteBasicShapeObjs();
 	DeleteCarModel();
 	DeleteGroundTexture();
+	DeleteMoonTexture();
 }
 
 
@@ -153,6 +158,12 @@ void Display()
 	// Camera Transform Matrix ¼³Á¤.
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(g_camera.GetGLViewMatrix()));
 
+	// texture filtering ¼³Á¤
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 
 	// texture ¹Ù´Ú 
@@ -164,7 +175,15 @@ void Display()
 		DrawGroundTexture();
 	}
 
-	
+	// Moon
+	{
+		glUniform1i(glGetUniformLocation(s_program_id, "flag_texture"), true);
+		glBindTexture(GL_TEXTURE_2D, s_program_id);
+
+		glm::mat4 moon_T = glm::translate(glm::vec3(0.f, 3.f, 0.f)) * glm::scale(glm::vec3(0.7f, 0.7f, 0.7f));
+		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(moon_T));
+		DrawMoonTexture();
+	}
 
 	// Moving Car
 	{
@@ -175,6 +194,8 @@ void Display()
 		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(car_T));
 		DrawCarModel();
 	}
+
+	
 
 	
 
