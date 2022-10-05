@@ -12,3 +12,5 @@ Release
 */Lib/ILU.lib
 */Lib/ILUT.lib
 HW_Examples
+.vs
+*/.vs
