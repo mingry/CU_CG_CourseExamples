@@ -229,21 +229,21 @@ int main(int argc, char** argv)
 
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//// 1. freeglut ÃÊ±âÈ­, ¿øµµ¿ì »ı¼ºÇÏ±â. 
+	//// 1. freeglut ì´ˆê¸°í™”, ì›ë„ìš° ìƒì„±í•˜ê¸°. 
 	////    Ref: https://en.wikibooks.org/wiki/OpenGL_Programming/Installation/GLUT
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	//// 1.1. ÃÖ±âÈ­
+	//// 1.1. ìµœê¸°í™”
 	glutInit(&argc, argv);
 	
-	//// 1.2. À©µµ¿ì ¸ğµå ¼³Á¤. 
-	// ´õºí¹öÆÛ¸µ, RGB ÇÁ·¹ÀÓ¹öÆÛ, Depth ¹öÆÛ¸¦ »ç¿ëÇÑ´Ù.
+	//// 1.2. ìœˆë„ìš° ëª¨ë“œ ì„¤ì •. 
+	// ë”ë¸”ë²„í¼ë§, RGB í”„ë ˆì„ë²„í¼, Depth ë²„í¼ë¥¼ ì‚¬ìš©í•œë‹¤.
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-	//// 1.3. À©µµ¿ì »çÀÌÁî ¼³Á¤ (°¡·Î, ¼¼·Î ÇÈ¼¿ ¼ö).
+	//// 1.3. ìœˆë„ìš° ì‚¬ì´ì¦ˆ ì„¤ì • (ê°€ë¡œ, ì„¸ë¡œ í”½ì…€ ìˆ˜).
 	glutInitWindowSize(g_window_w, g_window_h);
 
-	//// 1.4. OpenGL Context¿Í ¿¬°áµÈ À©µµ¿ì »ı¼º.
+	//// 1.4. OpenGL Contextì™€ ì—°ê²°ëœ ìœˆë„ìš° ìƒì„±.
 	glutCreateWindow("Computer Graphics");
 	
 	//// 1.5. Callback functions 
@@ -260,7 +260,7 @@ int main(int argc, char** argv)
 
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//// 2. GLEW ÃÊ±âÈ­. 
+	//// 2. GLEW ì´ˆê¸°í™”. 
 	////    Ref: http://glew.sourceforge.net/basic.html
 	//////////////////////////////////////////////////////////////////////////////////////
 	glewExperimental = GL_TRUE;
@@ -279,21 +279,21 @@ int main(int argc, char** argv)
 
 
 	//////////////////////////////////////////////////////////////////////////////////////
-	//// 3. Shader Programs µî·Ï
+	//// 3. Shader Programs ë“±ë¡
 	////    Ref: https://www.khronos.org/opengl/wiki/Shader_Compilation
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	//// Vertex shader program
-	//// 3.1. Vertex shader °´Ã¼ »ı¼º.
+	//// 3.1. Vertex shader ê°ì²´ ìƒì„±.
 	GLuint v_shader_id = glCreateShader(GL_VERTEX_SHADER);
 
-	//// 3.2. Vertex shader ¼Ò½ºÄÚµå ÀÔ·Â.
+	//// 3.2. Vertex shader ì†ŒìŠ¤ì½”ë“œ ì…ë ¥.
 	glShaderSource(v_shader_id, 1, &v_shader_source, NULL);
 
-	//// 3.3. Vertex shader ¼Ò½ºÄÚµå ÄÄÆÄÀÏ.
+	//// 3.3. Vertex shader ì†ŒìŠ¤ì½”ë“œ ì»´íŒŒì¼.
 	glCompileShader(v_shader_id);
 
-	//// 3.4. ÄÄÆÄÀÏ ¿¡·¯ ¹ß»ı½Ã ¿¡·¯ ¸Ş¼¼Áö Ãâ·Â.
+	//// 3.4. ì»´íŒŒì¼ ì—ëŸ¬ ë°œìƒì‹œ ì—ëŸ¬ ë©”ì„¸ì§€ ì¶œë ¥.
 	{
 		GLint compiled;
 		glGetShaderiv(v_shader_id, GL_COMPILE_STATUS, &compiled);
@@ -313,16 +313,16 @@ int main(int argc, char** argv)
 
 
 	//// Fragment shader program 
-	//// 3.5. Fragment shader °´Ã¼ »ı¼º.
+	//// 3.5. Fragment shader ê°ì²´ ìƒì„±.
 	GLuint f_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
-	//// 3.6. Fragment shader ¼Ò½ºÄÚµå ÀÔ·Â.
+	//// 3.6. Fragment shader ì†ŒìŠ¤ì½”ë“œ ì…ë ¥.
 	glShaderSource(f_shader_id, 1, &f_shader_code, NULL);
 
-	//// 3.7. Fragment shader ¼Ò½ºÄÚµå ÄÄÆÄÀÏ.
+	//// 3.7. Fragment shader ì†ŒìŠ¤ì½”ë“œ ì»´íŒŒì¼.
 	glCompileShader(f_shader_id);
 
-	//// 3.8. ÄÄÆÄÀÏ ¿¡·¯ ¹ß»ı½Ã ¿¡·¯ ¸Ş¼¼Áö Ãâ·Â.
+	//// 3.8. ì»´íŒŒì¼ ì—ëŸ¬ ë°œìƒì‹œ ì—ëŸ¬ ë©”ì„¸ì§€ ì¶œë ¥.
 	{
 		GLint compiled;
 		glGetShaderiv(f_shader_id, GL_COMPILE_STATUS, &compiled);
@@ -341,17 +341,17 @@ int main(int argc, char** argv)
 	}
 
 	//// Shader Program (vertex shader + fragment shader)
-	//// 3.9. Shader Program °´Ã¤ »ı¼º.
+	//// 3.9. Shader Program ê°ì±„ ìƒì„±.
 	s_program_id = glCreateProgram();
 
-	//// 3.10. Vertex shader¿Í Fragment shader¸¦ Shader Program °´Ã¼¿¡ µî·Ï.
+	//// 3.10. Vertex shaderì™€ Fragment shaderë¥¼ Shader Program ê°ì²´ì— ë“±ë¡.
 	glAttachShader(s_program_id, v_shader_id);
 	glAttachShader(s_program_id, f_shader_id);
 
-	//// 3.11. Shader Program ¸µÅ©
+	//// 3.11. Shader Program ë§í¬
 	glLinkProgram(s_program_id);
 
-	//// 3.12. Shader Program »ç¿ë½ÃÀÛ
+	//// 3.12. Shader Program ì‚¬ìš©ì‹œì‘
 	glUseProgram(s_program_id);
 
 
@@ -360,7 +360,7 @@ int main(int argc, char** argv)
 
 
 	////////////////////////////////////////////////////////////////////////////////////
-	//// 4. OpenGL ¼³Á¤
+	//// 4. OpenGL ì„¤ì •
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
@@ -375,52 +375,52 @@ int main(int argc, char** argv)
 
 	
 	////////////////////////////////////////////////////////////////////////////////////
-	//// 5. VAO, VBO »ı¼º
+	//// 5. VAO, VBO ìƒì„±
 	////    Ref: https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Array_Object
 	///////////////////////////////////////////////////////////////////////////////////
 
-	//// 5.1. VAO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
+	//// 5.1. VAO ê°ì²´ ìƒì„± ë° ë°”ì¸ë”©
 	glGenVertexArrays(1, &g_vao_id);
 	glBindVertexArray(g_vao_id);
 
 	
-	//// 5.2. vertex positions ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.2. vertex positions ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_position_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_position_id);
 
-	//// 5.3. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.3. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 3 * g_num_vertices, m_positions, GL_STATIC_DRAW);
 
-	//// 5.4. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.4. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
 
-	//// 5.5. vertex normal vectors ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.5. vertex normal vectors ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_normal_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_normal_id);
 
-	//// 5.6. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.6. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 3 * g_num_vertices, m_normals, GL_STATIC_DRAW);
 
-	//// 5.7. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.7. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
 
-	//// 5.8. vertex colors ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.8. vertex colors ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_color_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_color_id);
 
-	//// 5.9. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.9. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 4 * g_num_vertices, m_colors, GL_STATIC_DRAW);
 
-	//// 5.10. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.10. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(2);
 
 
-	//// 5.11. Index Buffer °´Ã¼ »ı¼º ¹× µ¥ÀÌÅÍ ÀÔ·Â
+	//// 5.11. Index Buffer ê°ì²´ ìƒì„± ë° ë°ì´í„° ì…ë ¥
 	glGenBuffers(1, &g_index_buffer_id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3 * g_num_triangles, m_indices, GL_STATIC_DRAW);
@@ -428,12 +428,12 @@ int main(int argc, char** argv)
 	
 
 
-	//// 1.6. freeglut À©µµ¿ì ÀÌº¥Æ® Ã³¸® ½ÃÀÛ. À©µµ¿ì°¡ ´İÈú¶§±îÁö ÈÄÇÑ·çÇÁ ½ÇÇà.
+	//// 1.6. freeglut ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬ ì‹œì‘. ìœˆë„ìš°ê°€ ë‹«íë•Œê¹Œì§€ í›„í•œë£¨í”„ ì‹¤í–‰.
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 	glutMainLoop();
 
 
-	//// 5.12. VAO, VBO ¸Ş¸ğ¸® ÇØÁ¦. 
+	//// 5.12. VAO, VBO ë©”ëª¨ë¦¬ í•´ì œ. 
 	glDeleteBuffers(1, &g_vbo_position_id);
 	glDeleteBuffers(1, &g_vbo_color_id);
 	glDeleteBuffers(1, &g_vbo_normal_id);
@@ -445,50 +445,50 @@ int main(int argc, char** argv)
 
 
 /**
-Display: À©µµ¿ì È­¸éÀÌ ¾÷µ¥ÀÌÆ® µÉ ÇÊ¿ä°¡ ÀÖÀ» ¶§ È£ÃâµÇ´Â callback ÇÔ¼ö.
+Display: ìœˆë„ìš° í™”ë©´ì´ ì—…ë°ì´íŠ¸ ë  í•„ìš”ê°€ ìˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜.
 
-À©µµ¿ì »ó¿¡ ÃÖÁ¾ °á°ú¸¦ ·»´õ¸µ ÇÏ´Â ÄÚµå´Â ÀÌ ÇÔ¼ö ³»¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù.
-¿øµµ¿ì°¡ Ã³À½ ¿­¸± ¶§, À©µµ¿ì Å©±â°¡ ¹Ù²ğ ¶§, ´Ù¸¥ À©µµ¿ì¿¡ ÀÇÇØ È­¸éÀÇ ÀÏºÎ
-¶Ç´Â ÀüÃ¼°¡ °¡·ÁÁ³´Ù°¡ ´Ù½Ã ³ªÅ¸³¯ ¶§ µî ½Ã½ºÅÛÀÌ ÇØ´ç À©µµ¿ì ³»ÀÇ ±×¸²¿¡ ´ëÇÑ
-¾÷µ¥ÀÌÆ®°¡ ÇÊ¿äÇÏ´Ù°í ÆÇ´ÜÇÏ´Â °æ¿ì ÀÚµ¿À¸·Î È£ÃâµÈ´Ù.
-°­Á¦ È£ÃâÀÌ ÇÊ¿äÇÑ °æ¿ì¿¡´Â glutPostRedisplay() ÇÔ¼ö¸¦ È£ÃâÇÏ¸éµÈ´Ù.
+ìœˆë„ìš° ìƒì— ìµœì¢… ê²°ê³¼ë¥¼ ë Œë”ë§ í•˜ëŠ” ì½”ë“œëŠ” ì´ í•¨ìˆ˜ ë‚´ì— êµ¬í˜„í•´ì•¼í•œë‹¤.
+ì›ë„ìš°ê°€ ì²˜ìŒ ì—´ë¦´ ë•Œ, ìœˆë„ìš° í¬ê¸°ê°€ ë°”ë€” ë•Œ, ë‹¤ë¥¸ ìœˆë„ìš°ì— ì˜í•´ í™”ë©´ì˜ ì¼ë¶€
+ë˜ëŠ” ì „ì²´ê°€ ê°€ë ¤ì¡Œë‹¤ê°€ ë‹¤ì‹œ ë‚˜íƒ€ë‚  ë•Œ ë“± ì‹œìŠ¤í…œì´ í•´ë‹¹ ìœˆë„ìš° ë‚´ì˜ ê·¸ë¦¼ì— ëŒ€í•œ
+ì—…ë°ì´íŠ¸ê°€ í•„ìš”í•˜ë‹¤ê³  íŒë‹¨í•˜ëŠ” ê²½ìš° ìë™ìœ¼ë¡œ í˜¸ì¶œëœë‹¤.
+ê°•ì œ í˜¸ì¶œì´ í•„ìš”í•œ ê²½ìš°ì—ëŠ” glutPostRedisplay() í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ë©´ëœë‹¤.
 
-ÀÌ ÇÔ¼ö´Â ºÒ½Ã¿¡ ºó¹øÇÏ°Ô È£ÃâµÈ´Ù´Â °ÍÀ» ¸í½ÉÇÏ°í, À©µµ¿ì »óÅÂ º¯È­¿Í ¹«°üÇÑ
-1È¸¼º ÄÚµå´Â °¡´ÉÇÑÇÑ ÀÌ ÇÔ¼ö ¹Û¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù. Æ¯È÷ ¸Ş¸ğ¸® ÇÒ´ç, VAO, VBO »ı¼º
-µîÀÇ ÇÏµå¿ş¾î Á¡À¯¸¦ ½ÃµµÇÏ´Â ÄÚµå´Â Æ¯º°ÇÑ ÀÌÀ¯°¡ ¾ø´Ù¸é Àı´ë ÀÌ ÇÔ¼ö¿¡ Æ÷ÇÔ½ÃÅ°¸é
-¾ÈµÈ´Ù. ¿¹¸¦ µé¾î, ¸Ş½Ã ¸ğµ¨À» Á¤ÀÇÇÏ°í VAO, VBO¸¦ ¼³Á¤ÇÏ´Â ºÎºĞÀº ÃÖÃÊ 1È¸¸¸
-½ÇÇàÇÏ¸éµÇ¹Ç·Î main() ÇÔ¼ö µî ¿ÜºÎ¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù. Á¤ÀÇµÈ ¸Ş½Ã ¸ğµ¨À» ÇÁ·¹ÀÓ ¹öÆÛ¿¡
-±×¸®µµ·Ï Áö½ÃÇÏ´Â ÄÚµå¸¸ ÀÌ ÇÔ¼ö¿¡ ±¸ÇöÇÏ¸é µÈ´Ù.
+ì´ í•¨ìˆ˜ëŠ” ë¶ˆì‹œì— ë¹ˆë²ˆí•˜ê²Œ í˜¸ì¶œëœë‹¤ëŠ” ê²ƒì„ ëª…ì‹¬í•˜ê³ , ìœˆë„ìš° ìƒíƒœ ë³€í™”ì™€ ë¬´ê´€í•œ
+1íšŒì„± ì½”ë“œëŠ” ê°€ëŠ¥í•œí•œ ì´ í•¨ìˆ˜ ë°–ì— êµ¬í˜„í•´ì•¼í•œë‹¤. íŠ¹íˆ ë©”ëª¨ë¦¬ í• ë‹¹, VAO, VBO ìƒì„±
+ë“±ì˜ í•˜ë“œì›¨ì–´ ì ìœ ë¥¼ ì‹œë„í•˜ëŠ” ì½”ë“œëŠ” íŠ¹ë³„í•œ ì´ìœ ê°€ ì—†ë‹¤ë©´ ì ˆëŒ€ ì´ í•¨ìˆ˜ì— í¬í•¨ì‹œí‚¤ë©´
+ì•ˆëœë‹¤. ì˜ˆë¥¼ ë“¤ì–´, ë©”ì‹œ ëª¨ë¸ì„ ì •ì˜í•˜ê³  VAO, VBOë¥¼ ì„¤ì •í•˜ëŠ” ë¶€ë¶„ì€ ìµœì´ˆ 1íšŒë§Œ
+ì‹¤í–‰í•˜ë©´ë˜ë¯€ë¡œ main() í•¨ìˆ˜ ë“± ì™¸ë¶€ì— êµ¬í˜„í•´ì•¼í•œë‹¤. ì •ì˜ëœ ë©”ì‹œ ëª¨ë¸ì„ í”„ë ˆì„ ë²„í¼ì—
+ê·¸ë¦¬ë„ë¡ ì§€ì‹œí•˜ëŠ” ì½”ë“œë§Œ ì´ í•¨ìˆ˜ì— êµ¬í˜„í•˜ë©´ ëœë‹¤.
 
-¸¸ÀÏ, ÀÌ ÇÔ¼ö ³»¿¡¼­ µ¿Àû ¸Ş¸ğ¸® ÇÒ´çÀ» ÇØ¾ßÇÏ´Â °æ¿ì°¡ ÀÖ´Ù¸é ÇØ´ç ¸Ş¸ğ¸®´Â ¹İµå½Ã
-ÀÌ ÇÔ¼ö°¡ ³¡³ª±â Àü¿¡ ÇØÁ¦ ÇØ¾ßÇÑ´Ù.
+ë§Œì¼, ì´ í•¨ìˆ˜ ë‚´ì—ì„œ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹ì„ í•´ì•¼í•˜ëŠ” ê²½ìš°ê°€ ìˆë‹¤ë©´ í•´ë‹¹ ë©”ëª¨ë¦¬ëŠ” ë°˜ë“œì‹œ
+ì´ í•¨ìˆ˜ê°€ ëë‚˜ê¸° ì „ì— í•´ì œ í•´ì•¼í•œë‹¤.
 
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node46.html#SECTION00081000000000000000
 */
 void Display()
 {
-	// ÀüÃ¼ È­¸éÀ» Áö¿î´Ù.
-	// glClear´Â Display ÇÔ¼ö °¡Àå À­ ºÎºĞ¿¡¼­ ÇÑ ¹ø¸¸ È£ÃâµÇ¾î¾ßÇÑ´Ù.
+	// ì „ì²´ í™”ë©´ì„ ì§€ìš´ë‹¤.
+	// glClearëŠ” Display í•¨ìˆ˜ ê°€ì¥ ìœ— ë¶€ë¶„ì—ì„œ í•œ ë²ˆë§Œ í˜¸ì¶œë˜ì–´ì•¼í•œë‹¤.
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	// Vertex shader ÀÇ matrix º¯¼öµéÀÇ locationÀ» ¹Ş¾Æ¿Â´Ù.
+	// Vertex shader ì˜ matrix ë³€ìˆ˜ë“¤ì˜ locationì„ ë°›ì•„ì˜¨ë‹¤.
 	int m_proj_loc = glGetUniformLocation(s_program_id, "proj_matrix");
 	int m_view_loc = glGetUniformLocation(s_program_id, "view_matrix");
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
 
 
-	// Projection Transform Matrix ¼³Á¤.
+	// Projection Transform Matrix ì„¤ì •.
 	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), 1.f, 0.01f, 1000.f);
 	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
-	// Camera Transform Matrix ¼³Á¤.
+	// Camera Transform Matrix ì„¤ì •.
 	glm::mat4 view_matrix = glm::lookAt(glm::vec3(2.f, 1.5f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
 
-	// Ã¹¹øÂ° Å¥ºêÀÇ Transform Matrix ¼³Á¤.
+	// ì²«ë²ˆì§¸ íë¸Œì˜ Transform Matrix ì„¤ì •.
 	glm::mat4 T1 = glm::rotate(glm::radians(g_y_angle), glm::vec3(0.f, 1.f, 0.f));
 	glUniformMatrix4fv(m_model_loc, 1, GL_FALSE, glm::value_ptr(T1));
 
@@ -497,8 +497,8 @@ void Display()
 	glDrawElements(GL_TRIANGLES, g_num_triangles * 3, GL_UNSIGNED_INT, 0);
 
 
-	//// µÎ¹øÂ° Å¥ºêÀÇ Transform Matrix ¼³Á¤.
-	// ¾Æ·¡ ÁÖ¼®À» ÇØÁ¦ÇÏ°í ½ÇÇàÇØº¼ °Í.
+	//// ë‘ë²ˆì§¸ íë¸Œì˜ Transform Matrix ì„¤ì •.
+	// ì•„ë˜ ì£¼ì„ì„ í•´ì œí•˜ê³  ì‹¤í–‰í•´ë³¼ ê²ƒ.
 	/* 
 	glm::mat4 trans_x = glm::translate(glm::vec3(0.5f, 0.f, 0.f));
 	glm::mat4 scale_half = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
@@ -513,36 +513,36 @@ void Display()
 
 	
 	// flipping the double buffers
-	// glutSwapBuffers´Â Ç×»ó Display ÇÔ¼ö °¡Àå ¾Æ·¡ ºÎºĞ¿¡¼­ ÇÑ ¹ø¸¸ È£ÃâµÇ¾î¾ßÇÑ´Ù.
+	// glutSwapBuffersëŠ” í•­ìƒ Display í•¨ìˆ˜ ê°€ì¥ ì•„ë˜ ë¶€ë¶„ì—ì„œ í•œ ë²ˆë§Œ í˜¸ì¶œë˜ì–´ì•¼í•œë‹¤.
 	glutSwapBuffers();
 }
 
 
 
 /**
-Timer: ÁöÁ¤µÈ ½Ã°£ ÈÄ¿¡ ÀÚµ¿À¸·Î È£ÃâµÇ´Â callback ÇÔ¼ö.
+Timer: ì§€ì •ëœ ì‹œê°„ í›„ì— ìë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜.
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node64.html#SECTION000819000000000000000
 */
 void Timer(int value)
 {
 	g_y_angle += 1.f;
 
-	// glutPostRedisplay´Â °¡´ÉÇÑ ºü¸¥ ½Ã°£ ¾È¿¡ ÀüÃ¼ ±×¸²À» ´Ù½Ã ±×¸± °ÍÀ» ½Ã½ºÅÛ¿¡ ¿äÃ»ÇÑ´Ù.
-	// °á°úÀûÀ¸·Î Display() ÇÔ¼ö°¡ È£Ãâ µÈ´Ù.
+	// glutPostRedisplayëŠ” ê°€ëŠ¥í•œ ë¹ ë¥¸ ì‹œê°„ ì•ˆì— ì „ì²´ ê·¸ë¦¼ì„ ë‹¤ì‹œ ê·¸ë¦´ ê²ƒì„ ì‹œìŠ¤í…œì— ìš”ì²­í•œë‹¤.
+	// ê²°ê³¼ì ìœ¼ë¡œ Display() í•¨ìˆ˜ê°€ í˜¸ì¶œ ëœë‹¤.
 	glutPostRedisplay();
 
-	// 1/60 ÃÊ ÈÄ¿¡ Timer ÇÔ¼ö°¡ ´Ù½Ã È£ÃâµÇ·Î·Ï ÇÑ´Ù.
-	// Timer ÇÔ¼ö °¡ µ¿ÀÏÇÑ ½Ã°£ °£°İÀ¸·Î ¹İº¹ È£ÃâµÇ°ÔÇÏ¿©,
-	// ¾Ö´Ï¸ŞÀÌ¼Ç È¿°ú¸¦ Ç¥ÇöÇÒ ¼ö ÀÖ´Ù
+	// 1/60 ì´ˆ í›„ì— Timer í•¨ìˆ˜ê°€ ë‹¤ì‹œ í˜¸ì¶œë˜ë¡œë¡ í•œë‹¤.
+	// Timer í•¨ìˆ˜ ê°€ ë™ì¼í•œ ì‹œê°„ ê°„ê²©ìœ¼ë¡œ ë°˜ë³µ í˜¸ì¶œë˜ê²Œí•˜ì—¬,
+	// ì• ë‹ˆë©”ì´ì…˜ íš¨ê³¼ë¥¼ í‘œí˜„í•  ìˆ˜ ìˆë‹¤
 	glutTimerFunc((unsigned int)(1000 / 60), Timer, 0);
 }
 
 
 
 /**
-Reshape: À©µµ¿ìÀÇ Å©±â°¡ Á¶Á¤µÉ ¶§¸¶´Ù ÀÚµ¿À¸·Î È£ÃâµÇ´Â callback ÇÔ¼ö.
+Reshape: ìœˆë„ìš°ì˜ í¬ê¸°ê°€ ì¡°ì •ë  ë•Œë§ˆë‹¤ ìë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜.
 
-@param w, h´Â °¢°¢ Á¶Á¤µÈ À©µµ¿ìÀÇ °¡·Î Å©±â¿Í ¼¼·Î Å©±â (ÇÈ¼¿ ´ÜÀ§).
+@param w, hëŠ” ê°ê° ì¡°ì •ëœ ìœˆë„ìš°ì˜ ê°€ë¡œ í¬ê¸°ì™€ ì„¸ë¡œ í¬ê¸° (í”½ì…€ ë‹¨ìœ„).
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node48.html#SECTION00083000000000000000
 */
 void Reshape(int w, int h)
@@ -555,41 +555,41 @@ void Reshape(int w, int h)
 }
 
 /**
-Keyboard: Å°º¸µå ÀÔ·ÂÀÌ ÀÖÀ» ¶§¸¶´Ù ÀÚµ¿À¸·Î È£ÃâµÇ´Â ÇÔ¼ö.
-@param key´Â ´­·ÁÁø Å°º¸µåÀÇ ¹®ÀÚ°ª.
-@param x,y´Â ÇöÀç ¸¶¿ì½º Æ÷ÀÎÅÍÀÇ ÁÂÇ¥°ª.
+Keyboard: í‚¤ë³´ë“œ ì…ë ¥ì´ ìˆì„ ë•Œë§ˆë‹¤ ìë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜.
+@param keyëŠ” ëˆŒë ¤ì§„ í‚¤ë³´ë“œì˜ ë¬¸ìê°’.
+@param x,yëŠ” í˜„ì¬ ë§ˆìš°ìŠ¤ í¬ì¸í„°ì˜ ì¢Œí‘œê°’.
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node49.html#SECTION00084000000000000000
 
 */
 void Keyboard(unsigned char key, int x, int y)
 {
-	// keyboard '1' ÀÌ ´­·ÁÁ³À» ¶§.
+	// keyboard '1' ì´ ëˆŒë ¤ì¡Œì„ ë•Œ.
 	if (key == '1')
 	{
-		// Fragment shader¿¡ Á¤ÀÇ µÇ¾îÀÖ´Â 'shading_mode' º¯¼öÀÇ locationÀ» ¹Ş¾Æ¿Â´Ù.
+		// Fragment shaderì— ì •ì˜ ë˜ì–´ìˆëŠ” 'shading_mode' ë³€ìˆ˜ì˜ locationì„ ë°›ì•„ì˜¨ë‹¤.
 		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
 
-		// 'shading_mode' °ªÀ¸·Î 1À» ¼³Á¤.
+		// 'shading_mode' ê°’ìœ¼ë¡œ 1ì„ ì„¤ì •.
 		glUniform1i(shading_mode_loc, 1);
 
 
-		// glutPostRedisplay´Â °¡´ÉÇÑ ºü¸¥ ½Ã°£ ¾È¿¡ ÀüÃ¼ ±×¸²À» ´Ù½Ã ±×¸± °ÍÀ» ½Ã½ºÅÛ¿¡ ¿äÃ»ÇÑ´Ù.
-		// °á°úÀûÀ¸·Î Display() ÇÔ¼ö¸¦ È£ÃâÇÏ°Ô µÈ´Ù.
+		// glutPostRedisplayëŠ” ê°€ëŠ¥í•œ ë¹ ë¥¸ ì‹œê°„ ì•ˆì— ì „ì²´ ê·¸ë¦¼ì„ ë‹¤ì‹œ ê·¸ë¦´ ê²ƒì„ ì‹œìŠ¤í…œì— ìš”ì²­í•œë‹¤.
+		// ê²°ê³¼ì ìœ¼ë¡œ Display() í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê²Œ ëœë‹¤.
 		glutPostRedisplay();
 	}
 
-	// keyboard '2' °¡ ´­·ÁÁ³À» ¶§.
+	// keyboard '2' ê°€ ëˆŒë ¤ì¡Œì„ ë•Œ.
 	else if (key == '2')
 	{
-		// Fragment shader¿¡ Á¤ÀÇ µÇ¾îÀÖ´Â 'shading_mode' º¯¼öÀÇ locationÀ» ¹Ş¾Æ¿Â´Ù.
+		// Fragment shaderì— ì •ì˜ ë˜ì–´ìˆëŠ” 'shading_mode' ë³€ìˆ˜ì˜ locationì„ ë°›ì•„ì˜¨ë‹¤.
 		int shading_mode_loc = glGetUniformLocation(s_program_id, "shading_mode");
 
-		// 'shading_mode' °ªÀ¸·Î 2¸¦ ¼³Á¤.
+		// 'shading_mode' ê°’ìœ¼ë¡œ 2ë¥¼ ì„¤ì •.
 		glUniform1i(shading_mode_loc, 2);
 
 
-		// glutPostRedisplay´Â °¡´ÉÇÑ ºü¸¥ ½Ã°£ ¾È¿¡ ÀüÃ¼ ±×¸²À» ´Ù½Ã ±×¸± °ÍÀ» ½Ã½ºÅÛ¿¡ ¿äÃ»ÇÑ´Ù.
-		// °á°úÀûÀ¸·Î Display() ÇÔ¼ö¸¦ È£ÃâÇÏ°Ô µÈ´Ù.
+		// glutPostRedisplayëŠ” ê°€ëŠ¥í•œ ë¹ ë¥¸ ì‹œê°„ ì•ˆì— ì „ì²´ ê·¸ë¦¼ì„ ë‹¤ì‹œ ê·¸ë¦´ ê²ƒì„ ì‹œìŠ¤í…œì— ìš”ì²­í•œë‹¤.
+		// ê²°ê³¼ì ìœ¼ë¡œ Display() í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê²Œ ëœë‹¤.
 		glutPostRedisplay();
 	}
 }

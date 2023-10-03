@@ -140,48 +140,48 @@ void InitCube()
 	  20, 22, 23
 	};
 
-	//// 5.1. VAO °´Ã¼ »ı¼º ¹× ¹ÙÀÎµù
+	//// 5.1. VAO ê°ì²´ ìƒì„± ë° ë°”ì¸ë”©
 	glGenVertexArrays(1, &g_vao_id);
 	glBindVertexArray(g_vao_id);
 
 
-	//// 5.2. vertex positions ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.2. vertex positions ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_position_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_position_id);
 
-	//// 5.3. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.3. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 3 * g_num_vertices, m_positions, GL_STATIC_DRAW);
 
-	//// 5.4. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.4. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
 
-	//// 5.5. vertex normal vectors ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.5. vertex normal vectors ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_normal_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_normal_id);
 
-	//// 5.6. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.6. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 3 * g_num_vertices, m_normals, GL_STATIC_DRAW);
 
-	//// 5.7. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.7. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
 
-	//// 5.8. vertex colors ÀúÀåÀ» À§ÇÑ VBO »ı¼º ¹× ¹ÙÀÎµù.
+	//// 5.8. vertex colors ì €ì¥ì„ ìœ„í•œ VBO ìƒì„± ë° ë°”ì¸ë”©.
 	glGenBuffers(1, &g_vbo_color_id);
 	glBindBuffer(GL_ARRAY_BUFFER, g_vbo_color_id);
 
-	//// 5.9. vertex positions µ¥ÀÌÅÍ ÀÔ·Â.
+	//// 5.9. vertex positions ë°ì´í„° ì…ë ¥.
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 4 * g_num_vertices, m_colors, GL_STATIC_DRAW);
 
-	//// 5.10. ÇöÀç ¹ÙÀÎµùµÇ¾îÀÖ´Â VBO¸¦ shader program°ú ¿¬°á
+	//// 5.10. í˜„ì¬ ë°”ì¸ë”©ë˜ì–´ìˆëŠ” VBOë¥¼ shader programê³¼ ì—°ê²°
 	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(2);
 
 
-	//// 5.11. Index Buffer °´Ã¼ »ı¼º ¹× µ¥ÀÌÅÍ ÀÔ·Â
+	//// 5.11. Index Buffer ê°ì²´ ìƒì„± ë° ë°ì´í„° ì…ë ¥
 	glGenBuffers(1, &g_index_buffer_id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_index_buffer_id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * 3 * g_num_triangles, m_indices, GL_STATIC_DRAW);
@@ -198,7 +198,7 @@ void DrawCube()
 
 void DeleteCube()
 {
-	//// 5.12. VAO, VBO ¸Ş¸ğ¸® ÇØÁ¦. 
+	//// 5.12. VAO, VBO ë©”ëª¨ë¦¬ í•´ì œ. 
 	glDeleteBuffers(1, &g_vbo_position_id);
 	glDeleteBuffers(1, &g_vbo_color_id);
 	glDeleteBuffers(1, &g_vbo_normal_id);
