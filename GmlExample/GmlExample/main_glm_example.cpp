@@ -1,15 +1,15 @@
 
-#include "glm/glm.hpp"	// glm ±âº» ÇÔ¼ö
-#include "glm/ext.hpp"	// glm È®Àå ÇÔ¼ö
-#include <math.h>	// c/c++ ±âº» ¼öÇĞÇÔ¼ö (cos, sin µî)
-#include <iostream>	// c++ Ç¥ÁØÀÔÃâ·Â (cout)
-#include <string>	// c++ ±âº» string Å¬·¡½º
+#include "glm/glm.hpp"	// glm ê¸°ë³¸ í•¨ìˆ˜
+#include "glm/ext.hpp"	// glm í™•ì¥ í•¨ìˆ˜
+#include <math.h>	// c/c++ ê¸°ë³¸ ìˆ˜í•™í•¨ìˆ˜ (cos, sin ë“±)
+#include <iostream>	// c++ í‘œì¤€ì…ì¶œë ¥ (cout)
+#include <string>	// c++ ê¸°ë³¸ string í´ë˜ìŠ¤
 
 
 int main(int argc, char** argv)
 {
 	////////////////////////////////////////////////////////////////////////////
-	//// c++ string Å¬·¡½º »ç¿ë.
+	//// c++ string í´ë˜ìŠ¤ ì‚¬ìš©.
 	// (read) http://tcpschool.com/cpp/cpp_string_stringClass
 	std::string str1 = "aaa";
 	std::string str2 = "bbb";
@@ -18,15 +18,15 @@ int main(int argc, char** argv)
 
 	
 	////////////////////////////////////////////////////////////////////////////
-	//// c++ Ç¥ÁØÃâ·Â coutÀÇ »ç¿ë. 
-	// ±âº» º¯¼ö (int, float µî) ¶Ç´Â Ç¥ÁØÃâ·Â ¹æ½ÄÀÌ Á¤ÀÇµÇ¾îÀÖ´Â class °´Ã¼ (std::string µî)¸¸À» Ãâ·ÂÇÒ ¼ö ÀÖ´Ù.
-	// Ãâ·ÂÇÒ °ªÀÌ³ª º¯¼ö »çÀÌ¸¦ << ±âÈ£·Î ±¸ºĞÇÑ´Ù.
-	// std::endl Àº ÁÙ¹Ù²Ş ¹®ÀÚÀÌ´Ù. "\n"¿Í °°´Ù.
+	//// c++ í‘œì¤€ì¶œë ¥ coutì˜ ì‚¬ìš©. 
+	// ê¸°ë³¸ ë³€ìˆ˜ (int, float ë“±) ë˜ëŠ” í‘œì¤€ì¶œë ¥ ë°©ì‹ì´ ì •ì˜ë˜ì–´ìˆëŠ” class ê°ì²´ (std::string ë“±)ë§Œì„ ì¶œë ¥í•  ìˆ˜ ìˆë‹¤.
+	// ì¶œë ¥í•  ê°’ì´ë‚˜ ë³€ìˆ˜ ì‚¬ì´ë¥¼ << ê¸°í˜¸ë¡œ êµ¬ë¶„í•œë‹¤.
+	// std::endl ì€ ì¤„ë°”ê¿ˆ ë¬¸ìì´ë‹¤. "\n"ì™€ ê°™ë‹¤.
 	// (read) http://tcpschool.com/cpp/cpp_intro_iostream
 	std::cout << "Hello world" << std::endl;
 	std::cout << "str1 + str2 = " << str3 << std::endl;	
-	std::cout << std::endl;	// ÁÙ¹Ù²Ş ¹®ÀÚ Ãâ·Â.
-	std::cout << std::endl;	// ÁÙ¹Ù²Ş ¹®ÀÚ Ãâ·Â.
+	std::cout << std::endl;	// ì¤„ë°”ê¿ˆ ë¬¸ì ì¶œë ¥.
+	std::cout << std::endl;	// ì¤„ë°”ê¿ˆ ë¬¸ì ì¶œë ¥.
 
 
 
@@ -36,28 +36,28 @@ int main(int argc, char** argv)
 	// (read) https://glm.g-truc.net/0.9.9/api/modules.html
 
 	////////////////////////////////////////////////////////////////////////////
-	//// GLM vec3 Å¬·¡½º »ç¿ë
+	//// GLM vec3 í´ë˜ìŠ¤ ì‚¬ìš©
 	// (read) https://glm.g-truc.net/0.9.9/api/a00699.html
 	std::cout << "* GLM 3D Vector" << std::endl;
 
-	// º¯¼ö ¼±¾ğ ¹× ÃÊ±âÈ­
-	glm::vec3 v0(1, 2, -3);		// »ı¼ºÀÚ È£ÃâÀ» ÅëÇÑ ÃÊ±âÈ­
+	// ë³€ìˆ˜ ì„ ì–¸ ë° ì´ˆê¸°í™”
+	glm::vec3 v0(1, 2, -3);		// ìƒì„±ì í˜¸ì¶œì„ í†µí•œ ì´ˆê¸°í™”
 
-	glm::vec3 v1;		// º¯¼ö ¼±¾ğ
-	v1.x = -4;			// x°ª ¼³Á¤
+	glm::vec3 v1;		// ë³€ìˆ˜ ì„ ì–¸
+	v1.x = -4;			// xê°’ ì„¤ì •
 	v1.y = 5;
 	v1.z = 6;
 
-	// º¤ÅÍ ´õÇÏ±â
+	// ë²¡í„° ë”í•˜ê¸°
 	glm::vec3 v2 = v0 + v1;
 
-	// ½Ç¼ö(float) °öÇÏ±â º¤ÅÍ
+	// ì‹¤ìˆ˜(float) ê³±í•˜ê¸° ë²¡í„°
 	glm::vec3 v3 = 2.5f * v1;
 
-	// Normalizing °è»ê
+	// Normalizing ê³„ì‚°
 	glm::vec3 unit_v1 = glm::normalize(v1);
 
-	// Length °è»ê
+	// Length ê³„ì‚°
 	float length_v1 = glm::length(v1);
 
 	// Dot Product
@@ -80,35 +80,35 @@ int main(int argc, char** argv)
 
 
 	////////////////////////////////////////////////////////////////////////////
-	//// GLM Matrix Å¬·¡½º »ç¿ë
+	//// GLM Matrix í´ë˜ìŠ¤ ì‚¬ìš©
 	// (read) https://glm.g-truc.net/0.9.9/api/a00701.html
 	std::cout << std::endl << std::endl << "* GLM Matrix" << std::endl;
 
-	// 3x3 ´ÜÀ§ Çà·Ä (identity matrix)
+	// 3x3 ë‹¨ìœ„ í–‰ë ¬ (identity matrix)
 	glm::mat3 m0(1.0f);
 
-	// 3x3 ÀÓÀÇÀÇ °ª Çà·Ä matrix
+	// 3x3 ì„ì˜ì˜ ê°’ í–‰ë ¬ matrix
 	glm::mat3 m1(1.0f, 2.0f, 3.0f,
 		4.0f, 5.0f, 6.0f,
 		7.0f, 0.0f, 9.0f);
 
 
-	// Assign ÈÄ (1, 2) ¿ä¼Ò°ª º¯°æ
+	// Assign í›„ (1, 2) ìš”ì†Œê°’ ë³€ê²½
 	glm::mat3 m2 = m1;
 	m2[1][2] = -5.0f;
 
 
-	// ¿ªÇà·Ä (Matrix Inverse)
+	// ì—­í–‰ë ¬ (Matrix Inverse)
 	glm::mat3 m1_inverse = glm::inverse(m1);
 
-	// ÀüÄ¡Çà·Ä (Matrix Transpose)
+	// ì „ì¹˜í–‰ë ¬ (Matrix Transpose)
 	glm::mat3 m1_transpose = glm::transpose(m1);
 
-	// Çà·Ä °öÇÏ±â (Matrix Multiplicaqtion)
+	// í–‰ë ¬ ê³±í•˜ê¸° (Matrix Multiplicaqtion)
 	glm::mat3 m1xm2 = m1 * m2;
 
 
-	// Çà·Ä °öÇÏ±â º¤ÅÍ (Matrix * Vector)
+	// í–‰ë ¬ ê³±í•˜ê¸° ë²¡í„° (Matrix * Vector)
 	glm::vec3 m1xv1 = m1 * v1;
 
 
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
 
 
 	////////////////////////////////////////////////////////////////////////////
-	//// GLM À» ÀÌ¿ëÇÑ ±âÇÏÇĞ º¯È¯ (Transform) °è»ê 
+	//// GLM ì„ ì´ìš©í•œ ê¸°í•˜í•™ ë³€í™˜ (Transform) ê³„ì‚° 
 	// Transformation in Homogeneous Coordinates
 	// (read) https://glm.g-truc.net/0.9.9/api/a00704.html
 	std::cout << std::endl << std::endl << "* GLM Transform" << std::endl;
