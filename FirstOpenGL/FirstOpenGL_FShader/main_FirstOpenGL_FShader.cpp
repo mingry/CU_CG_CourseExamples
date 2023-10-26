@@ -16,10 +16,10 @@ const int g_num_vertices = 4;
 const int g_num_triangles = 2;
 
 GLfloat m_positions[g_num_vertices * 3] =
-{ 0.f,  0.f,  0.f
-, 0.5f, 0.f,  0.f
-, 0.5f, 0.5f, 0.f
-, 0.f,  0.5f, 0.f
+{ -0.9f,  -0.9f,  0.f
+, 0.9f, -0.9f,  0.f
+, 0.9f, 0.9f, 0.f
+, -0.9f,  0.9f, 0.f
 };
 
 GLfloat m_normals[g_num_vertices * 3] =
@@ -66,23 +66,22 @@ R"(
 	layout (location=0) in vec3 vs_position;
 	layout (location=1) in vec3 vs_normal;
 	layout (location=2) in vec4 vs_color;
+layout (location=3) in vec2 vs_uv;
 
 	out vec4 fs_color;
+	out vec2 fs_uv;
 
 	void main()
 	{
-		mat4 R; // Z-축 중심으로 10도 회전
-		R[0][0] = cos(radians(45.f)); R[1][0] = -sin(radians(45.f)); R[2][0] = 0.f; R[3][0] = 0.f;
-		R[0][1] = sin(radians(45.f)); R[1][1] = cos(radians(45.f));  R[2][1] = 0.f; R[3][1] = 0.f;
-		R[0][2] = 0.f;                R[1][2] = 0.f;                 R[2][2] = 1.f; R[3][2] = 0.f;
-		R[0][3] = 0.f;                R[1][3] = 0.f;                 R[2][3] = 0.f; R[3][3] = 1.f;
 		
 
-		gl_Position = R * vec4(vs_position, 1.f);
+		gl_Position = vec4(vs_position, 1.f);
 		fs_color = vs_color;
+		fs_uv = vs_uv;
 	}
 		
 )";
+
 
 // fragament shader source code
 const GLchar * f_shader_code =
@@ -90,76 +89,79 @@ R"(
 	#version 330
 
 	in vec4 fs_color;
-	
+	in vec2 fs_uv;	
+	uniform float iTime = 10.0;
+	uniform vec2 iResolution = vec2(500.0, 500.0);
 	layout (location = 0) out vec4 color;
 
-	void main()
-	{
-		color = fs_color;
-	}
+	
 
-const float PI=3.14159265358979323846;
-const float value=0.0;
+	const float PI=3.14159265358979323846;
+	const float value=0.0;
 
-float rand(in vec2 p,in float t)
-	{
-	return fract(sin(dot(p+mod(t,1.0),vec2(12.9898,78.2333)))*43758.5453);
-	}
-
-vec2 rotate(vec2 k,float t)
-	{
-	return vec2(cos(t)*k.x-sin(t)*k.y,sin(t)*k.x+cos(t)*k.y);
-	}
-
-float scene1(vec3 p)
-	{
-	float speed=iTime*0.5;
-	float ground=dot(p,vec3(0.0,1.0,0.0))+0.75;
-	float t1=length(abs(mod(p.xyz,2.0)-1.0))-1.35+0.05*cos(PI*p.x*4.0)+0.05*sin(PI*p.z*4.0);	// structure
-	float t3=length(max(abs(mod(p.xyz,2.0)-1.0).xz-1.0,0.5))-0.075+0.1*cos(p.y*36.0);			// structure slices
-	float t5=length(abs(mod(p.xyz,0.5))-0.25)-0.975;
-	float bubble_w=0.8+0.2*cos(PI*p.z)+0.2*cos(PI*p.x);
-	float bubble=length(mod(p.xyz,0.125)-0.0625)-bubble_w;
-	float hole_w=0.05;
-	float hole=length(abs(mod(p.xz,1.0)-0.5))-hole_w;
-	float tube_p=2.0-0.25*sin(PI*p.z*0.5);
-	float tube_v=PI*8.0;
-    float tube_b=tube_p*0.02;
-	float tube_w=tube_b+tube_b*cos(p.x*tube_v)*sin(p.y*tube_v)*cos(p.z*tube_v)+tube_b*sin(PI*p.z+speed*4.0);
-	float tube=length(abs(mod(p.xy,tube_p)-tube_p*0.5))-tube_w;
-	return min(max(min(-t1,max(-hole-t5*0.375,ground+bubble)),t3+t5),tube);
-	}
-
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-	{
-	float speed=iTime*0.5;
-    float ground_x=1.5*cos(PI*speed*0.125);
-    float ground_y=4.0-3.0*sin(PI*speed*0.125)+0.125*value;
-    float ground_z=-1.0-speed;
-	vec2 position=fragCoord.xy/iResolution.xy;        
-	vec2 p=-1.0+2.0*position;
-	vec3 dir=normalize(vec3(p*vec2(1.625,1.0),0.75));	// screen ratio (x,y) fov (z)
-	dir.yz=rotate(dir.yz,PI*0.25*sin(PI*speed*0.125)-value*0.25);	// rotation x
-	dir.zx=rotate(dir.zx,PI*cos(-PI*speed*0.05));		// rotation y
-	dir.xy=rotate(dir.xy,PI*0.125*cos(PI*speed*0.125));	// rotation z
-	vec3 ray=vec3(ground_x,ground_y,ground_z);
-	float t=0.0;
-	const int ray_n=96;
-	for(int i=0;i<ray_n;i++)
+	float rand(in vec2 p,in float t)
 		{
-		float k=scene1(ray+dir*t);
-        if(abs(k)<0.005) break;
-		t+=k*0.5;
+		return fract(sin(dot(p+mod(t,1.0),vec2(12.9898,78.2333)))*43758.5453);
 		}
-	vec3 hit=ray+dir*t;
-	vec2 h=vec2(-0.02,0.01); // light
-	vec3 n=normalize(vec3(scene1(hit+h.xyy),scene1(hit+h.yxx),scene1(hit+h.yyx)));
-	float c=(n.x+n.y+n.z)*0.1;
-	vec3 color=vec3(c,c,c)-t*0.0625;
-    //color*=0.6+0.4*rand(vec2(t,t),iTime); // noise!
-	fragColor=vec4(vec3(c+t*0.08,c+t*0.02,c*1.5-t*0.01)+color*color,1.0);
-	}
+
+	vec2 rotate(vec2 k,float t)
+		{
+		return vec2(cos(t)*k.x-sin(t)*k.y,sin(t)*k.x+cos(t)*k.y);
+		}
+
+	float scene1(vec3 p)
+		{
+		float speed=iTime*0.5;
+		float ground=dot(p,vec3(0.0,1.0,0.0))+0.75;
+		float t1=length(abs(mod(p.xyz,2.0)-1.0))-1.35+0.05*cos(PI*p.x*4.0)+0.05*sin(PI*p.z*4.0);	// structure
+		float t3=length(max(abs(mod(p.xyz,2.0)-1.0).xz-1.0,0.5))-0.075+0.1*cos(p.y*36.0);			// structure slices
+		float t5=length(abs(mod(p.xyz,0.5))-0.25)-0.975;
+		float bubble_w=0.8+0.2*cos(PI*p.z)+0.2*cos(PI*p.x);
+		float bubble=length(mod(p.xyz,0.125)-0.0625)-bubble_w;
+		float hole_w=0.05;
+		float hole=length(abs(mod(p.xz,1.0)-0.5))-hole_w;
+		float tube_p=2.0-0.25*sin(PI*p.z*0.5);
+		float tube_v=PI*8.0;
+		float tube_b=tube_p*0.02;
+		float tube_w=tube_b+tube_b*cos(p.x*tube_v)*sin(p.y*tube_v)*cos(p.z*tube_v)+tube_b*sin(PI*p.z+speed*4.0);
+		float tube=length(abs(mod(p.xy,tube_p)-tube_p*0.5))-tube_w;
+		return min(max(min(-t1,max(-hole-t5*0.375,ground+bubble)),t3+t5),tube);
+		}
+
+	void mainImage( out vec4 fragColor, in vec2 fragCoord )
+		{
+		float speed=iTime*0.5;
+		float ground_x=1.5*cos(PI*speed*0.125);
+		float ground_y=4.0-3.0*sin(PI*speed*0.125)+0.125*value;
+		float ground_z=-1.0-speed;
+		vec2 position=fragCoord.xy/iResolution.xy;        
+		vec2 p=-1.0+2.0*position;
+		vec3 dir=normalize(vec3(p*vec2(1.625,1.0),0.75));	// screen ratio (x,y) fov (z)
+		dir.yz=rotate(dir.yz,PI*0.25*sin(PI*speed*0.125)-value*0.25);	// rotation x
+		dir.zx=rotate(dir.zx,PI*cos(-PI*speed*0.05));		// rotation y
+		dir.xy=rotate(dir.xy,PI*0.125*cos(PI*speed*0.125));	// rotation z
+		vec3 ray=vec3(ground_x,ground_y,ground_z);
+		float t=0.0;
+		const int ray_n=96;
+		for(int i=0;i<ray_n;i++)
+			{
+			float k=scene1(ray+dir*t);
+			if(abs(k)<0.005) break;
+			t+=k*0.5;
+			}
+		vec3 hit=ray+dir*t;
+		vec2 h=vec2(-0.02,0.01); // light
+		vec3 n=normalize(vec3(scene1(hit+h.xyy),scene1(hit+h.yxx),scene1(hit+h.yyx)));
+		float c=(n.x+n.y+n.z)*0.1;
+		vec3 color=vec3(c,c,c)-t*0.0625;
+		//color*=0.6+0.4*rand(vec2(t,t),iTime); // noise!
+		fragColor=vec4(vec3(c+t*0.08,c+t*0.02,c*1.5-t*0.01)+color*color,1.0);
+		}
 		
+		void main()
+		{
+			mainImage(color, gl_FragCoord.xy);
+		}
 )";
 
 //////////////////////////////////////////////////////////////////////
@@ -462,7 +464,8 @@ ref: https://www.opengl.org/resources/libraries/glut/spec3/node64.html#SECTION00
 */
 void Timer(int value)
 {
-
+	glUniform1f( glGetUniformLocation(s_program_id, "iTime"),
+		(float)glutGet(GLUT_ELAPSED_TIME) / 1000.0f);
 	// glutPostRedisplay는 가능한 빠른 시간 안에 전체 그림을 다시 그릴 것을 시스템에 요청한다.
 	// 결과적으로 Display() 함수가 호출 된다.
 	glutPostRedisplay();
@@ -486,6 +489,11 @@ void Reshape(int w, int h)
 	//  w : window width   h : window height
 	g_window_w = w;
 	g_window_h = h;
+
+	glViewport(0, 0, g_window_w, g_window_h);
+	glUniform2f(
+		glGetUniformLocation(s_program_id, "iResolution")
+		, (float)g_window_w, (float)g_window_h);
 
 	glutPostRedisplay();
 }
