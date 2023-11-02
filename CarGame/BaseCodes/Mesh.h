@@ -18,7 +18,7 @@ public:
 	~Mesh();
 	void Clear();
 
-	// Create Premitives.
+	// Create Primitives.
 	void CreateBox(float width=1, float height=1, float depth=1);
 	void CreateCylinder(glm::vec3 bottom_center, glm::vec3 top_center, float radius=1, int slices=32, int stacks=1);
 	void CreateCylinder(float height=1, float radius=1, int slices=16, int stacks=1);

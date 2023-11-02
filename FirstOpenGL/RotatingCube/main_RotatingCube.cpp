@@ -5,8 +5,8 @@
 #include "glm/ext.hpp"
 
 
-GLuint g_window_w = 500;
-GLuint g_window_h = 500;
+GLuint g_window_w = 1600/2;
+GLuint g_window_h = 900/2;
 
 
 //////////////////////////////////////////////////////////////////////
@@ -363,7 +363,7 @@ int main(int argc, char** argv)
 	//// 4. OpenGL 설정
 	//////////////////////////////////////////////////////////////////////////////////////
 
-	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
+	glViewport(0,0, (GLsizei)g_window_w, (GLsizei)g_window_h);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -480,11 +480,11 @@ void Display()
 
 
 	// Projection Transform Matrix 설정.
-	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), 1.f, 0.01f, 1000.f);
+	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), g_window_w/(float)g_window_h, 0.01f, 1000.f);
 	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
 	// Camera Transform Matrix 설정.
-	glm::mat4 view_matrix = glm::lookAt(glm::vec3(2.f, 1.5f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+	glm::mat4 view_matrix = glm::lookAt(glm::vec3(2.f, 5.5f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
 
@@ -550,6 +550,7 @@ void Reshape(int w, int h)
 	//  w : window width   h : window height
 	g_window_w = w;
 	g_window_h = h;
+	glViewport(0, 0, (GLsizei)g_window_w, (GLsizei)g_window_h);
 
 	glutPostRedisplay();
 }

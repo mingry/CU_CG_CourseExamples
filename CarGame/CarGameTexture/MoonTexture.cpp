@@ -91,8 +91,8 @@ void LoadTexture()
 	ilBindImage(g_image);
 	iluLoadImage("../Data/Diffuse_2K.png");
 
-	// OpenGL¿¡¼­´Â °¡·Î ¼¼·Î ±æÀÌ°¡ 2ÀÇ n½ÂÀÎ ÀÌ¹ÌÁö¸¦ »ç¿ëÇØ¾ßÇÏ¹Ç·Î
-	// iluScale ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ÀÌ¹ÌÁö Å©±â¸¦ º¯°æÇÑ´Ù.
+	// OpenGLì—ì„œëŠ” ê°€ë¡œ ì„¸ë¡œ ê¸¸ì´ê°€ 2ì˜ nìŠ¹ì¸ ì´ë¯¸ì§€ë¥¼ ì‚¬ìš©í•´ì•¼í•˜ë¯€ë¡œ
+	// iluScale í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ì´ë¯¸ì§€ í¬ê¸°ë¥¼ ë³€ê²½í•œë‹¤.
 	iluScale(2048, 2048, ilGetInteger(IL_IMAGE_DEPTH));	
 
 	int img_w = ilGetInteger(IL_IMAGE_WIDTH);
