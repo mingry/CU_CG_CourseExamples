@@ -21,7 +21,7 @@ static const glm::vec3 x_axis(1, 0, 0);
 static const glm::vec3 y_axis(0, 1, 0);
 static const glm::vec3 z_axis(0, 0, 1);
 
-// camera°¡ ÃÊ±â »óÅÂÀÏ¶§ zÃàÀÇ ¾çÀÇ ¹æÇâÀ¸·Î º¸°í ÀÖ°Ô ÇÏ±â À§ÇØ¼­ »ç¿ëµÈ´Ù.
+// cameraê°€ ì´ˆê¸° ìƒíƒœì¼ë•Œ zì¶•ì˜ ì–‘ì˜ ë°©í–¥ìœ¼ë¡œ ë³´ê³  ìˆê²Œ í•˜ê¸° ìœ„í•´ì„œ ì‚¬ìš©ëœë‹¤.
 static glm::quat y180((float)cos(glm::pi<float>()/2), 0.f, (float)sin(glm::pi<float>()/2), 0.f);
 
 Camera::Camera()
@@ -558,7 +558,7 @@ glm::mat4 Camera::GetGLViewMatrix() const
 	glm::mat4 m;
 	
 
-	// camera°¡ ÃÊ±â »óÅÂÀÏ¶§ zÃàÀÇ ¾çÀÇ ¹æÇâÀ¸·Î º¸°í ÀÖ°Ô ÇÏ±â À§ÇØ Ç×¼º y180À» ¸ÕÀú Àû¿ëÇÑ´Ù.
+	// cameraê°€ ì´ˆê¸° ìƒíƒœì¼ë•Œ zì¶•ì˜ ì–‘ì˜ ë°©í–¥ìœ¼ë¡œ ë³´ê³  ìˆê²Œ í•˜ê¸° ìœ„í•´ í•­ì„± y180ì„ ë¨¼ì € ì ìš©í•œë‹¤.
 	//cml::vector3d qv =  
 	float angle;
 	glm::vec3 axis;

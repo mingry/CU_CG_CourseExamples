@@ -20,13 +20,13 @@ static Mesh g_tree_mesh;
 
 void InitTreeModel()
 {
-	// Element 1, ³ª¹«±âµÕ
+	// Element 1, ë‚˜ë¬´ê¸°ë‘¥
 	Mesh trunk = glm::scale(glm::vec3(0.02f, 0.50f, 0.02f)) 
 				* glm::translate(glm::vec3(0.f, 0.5f, 0.f)) 
 				* g_cylinder_mesh;
 	trunk.SetColor(1.f, 0.f, 1.f, 1.f);
 	
-	// Element 2, ³ª¹µÀÙ
+	// Element 2, ë‚˜ë­‡ìžŽ
 	Mesh leaf = glm::rotate(glm::pi<float>()/2.f, glm::vec3(0.f, 1.f, 0.f))
 				* glm::rotate(-glm::pi<float>()/6.f, glm::vec3(1.f, 0.f, 0.f))
 				* glm::scale(glm::vec3(0.05f, 0.002f, 0.15f)) 
@@ -36,7 +36,7 @@ void InitTreeModel()
 
 
 
-	// Tree, ³ª¹«±âµÕ+³ª¹µÀÓ+³ª¹«±âµÕ
+	// Tree, ë‚˜ë¬´ê¸°ë‘¥+ë‚˜ë­‡ìž„+ë‚˜ë¬´ê¸°ë‘¥
 	glm::mat4 T(1.0);
 	g_tree_mesh = trunk;
 	T = glm::translate(glm::vec3(0.f, 0.50f, 0.f));

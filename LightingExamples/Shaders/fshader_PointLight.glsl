@@ -6,7 +6,7 @@ in vec3 fs_eye_dir;
 
 layout (location = 0) out vec4 color;
 
-uniform vec3 light_position;	// Point Light ±¤¿ø (ºûÀÌ Ãâ¹ßÇÏ´Â À§Ä¡)
+uniform vec3 light_position;	// Point Light ê´‘ì› (ë¹›ì´ ì¶œë°œí•˜ëŠ” ìœ„ì¹˜)
 float I_l;       // light intensity
 float I_a = 1.0; // ambient light intensity
 
@@ -16,7 +16,7 @@ uniform vec3 K_s;
 
 void main()
 {
-	// Phong Shading °è»ê (¼ö¾÷ ÀÚ·á Âü°í)
+	// Phong Shading ê³„ì‚° (ìˆ˜ì—… ìë£Œ ì°¸ê³ )
 	vec3 K_a = ambient_factor * fs_color.rgb;
 	vec3 K_d = fs_color.rgb;
 

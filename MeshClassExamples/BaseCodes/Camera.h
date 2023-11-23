@@ -58,7 +58,7 @@ public:
 	void setPivot(glm::vec3 p) { pivot = p; }
 
 
-	// dx¿Í dy´Â moust point ÀÇ º¯È­·®. (y´Â È­¸é¿¡¼­ ³ôÀ¸¼ö·Ï Áõ°¡)
+	// dxì™€ dyëŠ” moust point ì˜ ë³€í™”ëŸ‰. (yëŠ” í™”ë©´ì—ì„œ ë†’ìœ¼ìˆ˜ë¡ ì¦ê°€)
 	void inputMouse(int button, int dx, int dy, float speedScale = -1.0f);
 
 	void inputMouse(int button, int dx, int dy, int dz, float speedScale = -1.0f);
@@ -73,7 +73,7 @@ protected:
 protected:
 	glm::vec3 cameraP;
 
-	// camera ÀÇ ½ÇÁ¦ ¹°¸®Àû orientation
+	// camera ì˜ ì‹¤ì œ ë¬¼ë¦¬ì  orientation
 	glm::quat cameraQ;			
 	
 	//float cameraZoom;

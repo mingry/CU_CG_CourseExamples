@@ -38,9 +38,9 @@ GLuint s_program_id;
 
 
 /**
-InitOpenGL: ÇÁ·Î±×·¥ ÃÊ±â °ª ¼³Á¤À» À§ÇØ ÃÖÃÊ ÇÑ ¹ø È£ÃâµÇ´Â ÇÔ¼ö. (main ÇÔ¼ö Âü°í)
-OpenGL¿¡ °ü·ÃÇÑ ÃÊ±â °ª°ú ÇÁ·Î±×·¥¿¡ ÇÊ¿äÇÑ ´Ù¸¥ ÃÊ±â °ªÀ» ¼³Á¤ÇÑ´Ù.
-¿¹¸¦µé¾î, VAO¿Í VBO¸¦ ¿©±â¼­ »ý¼ºÇÒ ¼ö ÀÖ´Ù.
+InitOpenGL: í”„ë¡œê·¸ëž¨ ì´ˆê¸° ê°’ ì„¤ì •ì„ ìœ„í•´ ìµœì´ˆ í•œ ë²ˆ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜. (main í•¨ìˆ˜ ì°¸ê³ )
+OpenGLì— ê´€ë ¨í•œ ì´ˆê¸° ê°’ê³¼ í”„ë¡œê·¸ëž¨ì— í•„ìš”í•œ ë‹¤ë¥¸ ì´ˆê¸° ê°’ì„ ì„¤ì •í•œë‹¤.
+ì˜ˆë¥¼ë“¤ì–´, VAOì™€ VBOë¥¼ ì—¬ê¸°ì„œ ìƒì„±í•  ìˆ˜ ìžˆë‹¤.
 */
 void InitOpenGL()
 {
@@ -65,9 +65,9 @@ void InitOpenGL()
 
 
 /**
-ClearOpenGLResource: ÇÁ·Î±×·¥ÀÌ ³¡³ª±â ¸Þ¸ð¸® ÇØÁ¦¸¦ À§ÇØ ÇÑ ¹ø È£ÃâµÇ´Â ÇÔ¼ö. (main ÇÔ¼ö Âü°í)
-ÇÁ·Î±×·¥¿¡¼­ »ç¿ëÇÑ ¸Þ¸ð¸®¸¦ ¿©±â¿¡¼­ ÇØÁ¦ÇÒ ¼ö ÀÖ´Ù.
-¿¹¸¦µé¾î, VAO¿Í VBO¸¦ ¿©±â¼­ Áö¿ï ¼ö ÀÖ´Ù.
+ClearOpenGLResource: í”„ë¡œê·¸ëž¨ì´ ëë‚˜ê¸° ë©”ëª¨ë¦¬ í•´ì œë¥¼ ìœ„í•´ í•œ ë²ˆ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜. (main í•¨ìˆ˜ ì°¸ê³ )
+í”„ë¡œê·¸ëž¨ì—ì„œ ì‚¬ìš©í•œ ë©”ëª¨ë¦¬ë¥¼ ì—¬ê¸°ì—ì„œ í•´ì œí•  ìˆ˜ ìžˆë‹¤.
+ì˜ˆë¥¼ë“¤ì–´, VAOì™€ VBOë¥¼ ì—¬ê¸°ì„œ ì§€ìš¸ ìˆ˜ ìžˆë‹¤.
 */
 void ClearOpenGLResource()
 {
@@ -80,61 +80,61 @@ void ClearOpenGLResource()
 
 
 /**
-Display: À©µµ¿ì È­¸éÀÌ ¾÷µ¥ÀÌÆ® µÉ ÇÊ¿ä°¡ ÀÖÀ» ¶§ È£ÃâµÇ´Â callback ÇÔ¼ö.
+Display: ìœˆë„ìš° í™”ë©´ì´ ì—…ë°ì´íŠ¸ ë  í•„ìš”ê°€ ìžˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜.
 
-À©µµ¿ì »ó¿¡ ÃÖÁ¾ °á°ú¸¦ ·»´õ¸µ ÇÏ´Â ÄÚµå´Â ÀÌ ÇÔ¼ö ³»¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù.
-¿øµµ¿ì°¡ Ã³À½ ¿­¸± ¶§, À©µµ¿ì Å©±â°¡ ¹Ù²ð ¶§, ´Ù¸¥ À©µµ¿ì¿¡ ÀÇÇØ È­¸éÀÇ ÀÏºÎ
-¶Ç´Â ÀüÃ¼°¡ °¡·ÁÁ³´Ù°¡ ´Ù½Ã ³ªÅ¸³¯ ¶§ µî ½Ã½ºÅÛÀÌ ÇØ´ç À©µµ¿ì ³»ÀÇ ±×¸²¿¡ ´ëÇÑ
-¾÷µ¥ÀÌÆ®°¡ ÇÊ¿äÇÏ´Ù°í ÆÇ´ÜÇÏ´Â °æ¿ì ÀÚµ¿À¸·Î È£ÃâµÈ´Ù.
-°­Á¦ È£ÃâÀÌ ÇÊ¿äÇÑ °æ¿ì¿¡´Â glutPostRedisplay() ÇÔ¼ö¸¦ È£ÃâÇÏ¸éµÈ´Ù.
+ìœˆë„ìš° ìƒì— ìµœì¢… ê²°ê³¼ë¥¼ ë Œë”ë§ í•˜ëŠ” ì½”ë“œëŠ” ì´ í•¨ìˆ˜ ë‚´ì— êµ¬í˜„í•´ì•¼í•œë‹¤.
+ì›ë„ìš°ê°€ ì²˜ìŒ ì—´ë¦´ ë•Œ, ìœˆë„ìš° í¬ê¸°ê°€ ë°”ë€” ë•Œ, ë‹¤ë¥¸ ìœˆë„ìš°ì— ì˜í•´ í™”ë©´ì˜ ì¼ë¶€
+ë˜ëŠ” ì „ì²´ê°€ ê°€ë ¤ì¡Œë‹¤ê°€ ë‹¤ì‹œ ë‚˜íƒ€ë‚  ë•Œ ë“± ì‹œìŠ¤í…œì´ í•´ë‹¹ ìœˆë„ìš° ë‚´ì˜ ê·¸ë¦¼ì— ëŒ€í•œ
+ì—…ë°ì´íŠ¸ê°€ í•„ìš”í•˜ë‹¤ê³  íŒë‹¨í•˜ëŠ” ê²½ìš° ìžë™ìœ¼ë¡œ í˜¸ì¶œëœë‹¤.
+ê°•ì œ í˜¸ì¶œì´ í•„ìš”í•œ ê²½ìš°ì—ëŠ” glutPostRedisplay() í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ë©´ëœë‹¤.
 
-ÀÌ ÇÔ¼ö´Â ºÒ½Ã¿¡ ºó¹øÇÏ°Ô È£ÃâµÈ´Ù´Â °ÍÀ» ¸í½ÉÇÏ°í, À©µµ¿ì »óÅÂ º¯È­¿Í ¹«°üÇÑ
-1È¸¼º ÄÚµå´Â °¡´ÉÇÑÇÑ ÀÌ ÇÔ¼ö ¹Û¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù. Æ¯È÷ ¸Þ¸ð¸® ÇÒ´ç, VAO, VBO »ý¼º
-µîÀÇ ÇÏµå¿þ¾î Á¡À¯¸¦ ½ÃµµÇÏ´Â ÄÚµå´Â Æ¯º°ÇÑ ÀÌÀ¯°¡ ¾ø´Ù¸é Àý´ë ÀÌ ÇÔ¼ö¿¡ Æ÷ÇÔ½ÃÅ°¸é
-¾ÈµÈ´Ù. ¿¹¸¦ µé¾î, ¸Þ½Ã ¸ðµ¨À» Á¤ÀÇÇÏ°í VAO, VBO¸¦ ¼³Á¤ÇÏ´Â ºÎºÐÀº ÃÖÃÊ 1È¸¸¸
-½ÇÇàÇÏ¸éµÇ¹Ç·Î main() ÇÔ¼ö µî ¿ÜºÎ¿¡ ±¸ÇöÇØ¾ßÇÑ´Ù. Á¤ÀÇµÈ ¸Þ½Ã ¸ðµ¨À» ÇÁ·¹ÀÓ ¹öÆÛ¿¡
-±×¸®µµ·Ï Áö½ÃÇÏ´Â ÄÚµå¸¸ ÀÌ ÇÔ¼ö¿¡ ±¸ÇöÇÏ¸é µÈ´Ù.
+ì´ í•¨ìˆ˜ëŠ” ë¶ˆì‹œì— ë¹ˆë²ˆí•˜ê²Œ í˜¸ì¶œëœë‹¤ëŠ” ê²ƒì„ ëª…ì‹¬í•˜ê³ , ìœˆë„ìš° ìƒíƒœ ë³€í™”ì™€ ë¬´ê´€í•œ
+1íšŒì„± ì½”ë“œëŠ” ê°€ëŠ¥í•œí•œ ì´ í•¨ìˆ˜ ë°–ì— êµ¬í˜„í•´ì•¼í•œë‹¤. íŠ¹ížˆ ë©”ëª¨ë¦¬ í• ë‹¹, VAO, VBO ìƒì„±
+ë“±ì˜ í•˜ë“œì›¨ì–´ ì ìœ ë¥¼ ì‹œë„í•˜ëŠ” ì½”ë“œëŠ” íŠ¹ë³„í•œ ì´ìœ ê°€ ì—†ë‹¤ë©´ ì ˆëŒ€ ì´ í•¨ìˆ˜ì— í¬í•¨ì‹œí‚¤ë©´
+ì•ˆëœë‹¤. ì˜ˆë¥¼ ë“¤ì–´, ë©”ì‹œ ëª¨ë¸ì„ ì •ì˜í•˜ê³  VAO, VBOë¥¼ ì„¤ì •í•˜ëŠ” ë¶€ë¶„ì€ ìµœì´ˆ 1íšŒë§Œ
+ì‹¤í–‰í•˜ë©´ë˜ë¯€ë¡œ main() í•¨ìˆ˜ ë“± ì™¸ë¶€ì— êµ¬í˜„í•´ì•¼í•œë‹¤. ì •ì˜ëœ ë©”ì‹œ ëª¨ë¸ì„ í”„ë ˆìž„ ë²„í¼ì—
+ê·¸ë¦¬ë„ë¡ ì§€ì‹œí•˜ëŠ” ì½”ë“œë§Œ ì´ í•¨ìˆ˜ì— êµ¬í˜„í•˜ë©´ ëœë‹¤.
 
-¸¸ÀÏ, ÀÌ ÇÔ¼ö ³»¿¡¼­ µ¿Àû ¸Þ¸ð¸® ÇÒ´çÀ» ÇØ¾ßÇÏ´Â °æ¿ì°¡ ÀÖ´Ù¸é ÇØ´ç ¸Þ¸ð¸®´Â ¹Ýµå½Ã
-ÀÌ ÇÔ¼ö°¡ ³¡³ª±â Àü¿¡ ÇØÁ¦ ÇØ¾ßÇÑ´Ù.
+ë§Œì¼, ì´ í•¨ìˆ˜ ë‚´ì—ì„œ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹ì„ í•´ì•¼í•˜ëŠ” ê²½ìš°ê°€ ìžˆë‹¤ë©´ í•´ë‹¹ ë©”ëª¨ë¦¬ëŠ” ë°˜ë“œì‹œ
+ì´ í•¨ìˆ˜ê°€ ëë‚˜ê¸° ì „ì— í•´ì œ í•´ì•¼í•œë‹¤.
 
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node46.html#SECTION00081000000000000000
 */
 void Display()
 {
-	// ÀüÃ¼ È­¸éÀ» Áö¿î´Ù.
-	// glClear´Â Display ÇÔ¼ö °¡Àå À­ ºÎºÐ¿¡¼­ ÇÑ ¹ø¸¸ È£ÃâµÇ¾î¾ßÇÑ´Ù.
+	// ì „ì²´ í™”ë©´ì„ ì§€ìš´ë‹¤.
+	// glClearëŠ” Display í•¨ìˆ˜ ê°€ìž¥ ìœ— ë¶€ë¶„ì—ì„œ í•œ ë²ˆë§Œ í˜¸ì¶œë˜ì–´ì•¼í•œë‹¤.
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 
-	// Vertex shader ÀÇ matrix º¯¼öµéÀÇ locationÀ» ¹Þ¾Æ¿Â´Ù.
+	// Vertex shader ì˜ matrix ë³€ìˆ˜ë“¤ì˜ locationì„ ë°›ì•„ì˜¨ë‹¤.
 	int m_proj_loc = glGetUniformLocation(s_program_id, "proj_matrix");
 	int m_view_loc = glGetUniformLocation(s_program_id, "view_matrix");
 	int m_model_loc = glGetUniformLocation(s_program_id, "model_matrix");
 
 
 
-	// Projection Transform Matrix ¼³Á¤.
+	// Projection Transform Matrix ì„¤ì •.
 	glm::mat4 projection_matrix = glm::perspective(glm::radians(45.f), (float)g_window_w / g_window_h, 0.01f, 10000.f);
 	glUniformMatrix4fv(m_proj_loc, 1, GL_FALSE, glm::value_ptr(projection_matrix));
 
-	// Camera Transform Matrix ¼³Á¤.
+	// Camera Transform Matrix ì„¤ì •.
 	glm::mat4 view_matrix = g_camera.GetGLViewMatrix();
 	glUniformMatrix4fv(m_view_loc, 1, GL_FALSE, glm::value_ptr(view_matrix));
 
 
 
-	// Directional Light ¼³Á¤
+	// Directional Light ì„¤ì •
 	{
-		// ºûÀÇ ¹æÇâ ¼³Á¤.
+		// ë¹›ì˜ ë°©í–¥ ì„¤ì •.
 		glm::vec3 light_dir(-1.f, -1.f, 0.f);
 		light_dir = glm::normalize(light_dir);
 
 		// Apply Camera Matrices.
-		////// *** ÇöÀç Ä«¸Þ¶ó ¹æÇâÀ» °í·ÁÇÏ±â À§ÇØ view transform Àû¿ë  ***
-		//  light_dir´Â ¹æÇâÀ» ³ªÅ¸³»´Â º¤ÅÍÀÌ¹Ç·Î ÀÌµ¿(Translation)º¯È¯Àº ¹«½ÃµÇµµ·Ï ÇÑ´Ù. (³× ¹øÂ° ¿ä¼Ò 0.fÀ¸·Î ¼ÂÆÃ)
+		////// *** í˜„ìž¬ ì¹´ë©”ë¼ ë°©í–¥ì„ ê³ ë ¤í•˜ê¸° ìœ„í•´ view transform ì ìš©  ***
+		//  light_dirëŠ” ë°©í–¥ì„ ë‚˜íƒ€ë‚´ëŠ” ë²¡í„°ì´ë¯€ë¡œ ì´ë™(Translation)ë³€í™˜ì€ ë¬´ì‹œë˜ë„ë¡ í•œë‹¤. (ë„¤ ë²ˆì§¸ ìš”ì†Œ 0.fìœ¼ë¡œ ì…‹íŒ…)
 		light_dir = glm::vec3(  view_matrix * glm::vec4(light_dir, 0.f) );
 
 		int light_dir_loc = glGetUniformLocation(s_program_id, "light_dir");
@@ -145,39 +145,39 @@ void Display()
 
 	// Ground
 	{
-		// Ground¸¦ À§ÇÑ Phong Shading °ü·Ã º¯¼ö °ªÀ» ¼³Á¤ÇÑ´Ù.
+		// Groundë¥¼ ìœ„í•œ Phong Shading ê´€ë ¨ ë³€ìˆ˜ ê°’ì„ ì„¤ì •í•œë‹¤.
 		int shininess_loc = glGetUniformLocation(s_program_id, "shininess_n");
 		glUniform1f(shininess_loc, 50.f);
 
 		int K_s_loc = glGetUniformLocation(s_program_id, "K_s");
 		glUniform3f(K_s_loc, 0.3f, 0.3f, 0.3f);
 
-		// º¯È¯ Çà·ÄÀ» ¼³Á¤ÇÑ´Ù.
-		glm::mat4 model_T(1.f);	//´ÜÀ§Çà·Ä
+		// ë³€í™˜ í–‰ë ¬ì„ ì„¤ì •í•œë‹¤.
+		glm::mat4 model_T(1.f);	//ë‹¨ìœ„í–‰ë ¬
 		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(model_T));
 
-		// ±×¸°´Ù.
+		// ê·¸ë¦°ë‹¤.
 		DrawGround2();
 	}
 
 	// Sphere
 	{
-		// Sphere¸¦ À§ÇÑ Phong Shading °ü·Ã º¯¼ö °ªÀ» ¼³Á¤ÇÑ´Ù.
+		// Sphereë¥¼ ìœ„í•œ Phong Shading ê´€ë ¨ ë³€ìˆ˜ ê°’ì„ ì„¤ì •í•œë‹¤.
 		int shininess_loc = glGetUniformLocation(s_program_id, "shininess_n");
 		glUniform1f(shininess_loc, 100.f);
 
 		int K_s_loc = glGetUniformLocation(s_program_id, "K_s");
 		glUniform3f(K_s_loc, 0.7f, 0.7f, 0.7f);
 
-		// º¯È¯ Çà·ÄÀ» ¼³Á¤ÇÑ´Ù.
+		// ë³€í™˜ í–‰ë ¬ì„ ì„¤ì •í•œë‹¤.
 		glm::mat4 model_T;
 		model_T = glm::translate(glm::vec3(0.f, 1.f, 0.f)) * glm::scale(glm::vec3(0.8f, 0.8f, 0.8f));
 		glUniformMatrix4fv(m_model_loc, 1, GL_FALSE,  glm::value_ptr(model_T));
 
-		// ÀüÃ¼ ²ÀÁöÁ¡¿¡ Àû¿ëµÉ Color °ªÀ» ¼³Á¤ÇÑ´Ù. 
+		// ì „ì²´ ê¼­ì§€ì ì— ì ìš©ë  Color ê°’ì„ ì„¤ì •í•œë‹¤. 
 		glVertexAttrib4f(2, 0.3f, 0.6f, 0.9f, 1.f);
 
-		// ±¸¸¦ ±×¸°´Ù.
+		// êµ¬ë¥¼ ê·¸ë¦°ë‹¤.
 		DrawSphere();
 	}
 
@@ -194,9 +194,9 @@ void Display()
 
 
 /**
-Reshape: À©µµ¿ìÀÇ Å©±â°¡ Á¶Á¤µÉ ¶§¸¶´Ù ÀÚµ¿À¸·Î È£ÃâµÇ´Â callback ÇÔ¼ö.
+Reshape: ìœˆë„ìš°ì˜ í¬ê¸°ê°€ ì¡°ì •ë  ë•Œë§ˆë‹¤ ìžë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” callback í•¨ìˆ˜.
 
-@param w, h´Â °¢°¢ Á¶Á¤µÈ À©µµ¿ìÀÇ °¡·Î Å©±â¿Í ¼¼·Î Å©±â (ÇÈ¼¿ ´ÜÀ§).
+@param w, hëŠ” ê°ê° ì¡°ì •ëœ ìœˆë„ìš°ì˜ ê°€ë¡œ í¬ê¸°ì™€ ì„¸ë¡œ í¬ê¸° (í”½ì…€ ë‹¨ìœ„).
 ref: https://www.opengl.org/resources/libraries/glut/spec3/node48.html#SECTION00083000000000000000
 */
 void Reshape(int w, int h)
@@ -219,18 +219,18 @@ void Reshape(int w, int h)
 
 
 /**
-Mouse: ¸¶¿ì½º ¹öÆ°ÀÌ ÀÔ·ÂµÉ ¶§¸¶´Ù ÀÚµ¿À¸·Î È£ÃâµÇ´Â ÇÔ¼ö.
-ÆÄ¶ó¸ÞÅÍÀÇ ÀÇ¹Ì´Â ´ÙÀ½°ú °°´Ù.
-@param button: »ç¿ëµÈ ¹öÆ°ÀÇ Á¾·ù
-GLUT_LEFT_BUTTON - ¿ÞÂÊ ¹öÆ°
-GLUT_RIGHT_BUTTON - ¿À¸¥ÂÊ ¹öÆ°
-GLUT_MIDDLE_BUTTON - °¡¿îµ¥ ¹öÆ° (ÈÙÀÌ ´­·¯Á³À» ¶§)
-3 - ¸¶¿ì½º ÈÙ (ÈÙÀÌ À§·Î µ¹¾Æ °¬À½).
-4 - ¸¶¿ì½º ÈÙ (ÈÙÀÌ ¾Æ·¡·Î µ¹¾Æ °¬À½).
-@param state: Á¶ÀÛ »óÅÂ
-GLUT_DOWN - ´­·¯ Á³À½
-GLUT_UP - ³õ¿©Á³À½
-@param x,y: Á¶ÀÛÀÌ ÀÏ¾î³µÀ» ¶§, ¸¶¿ì½º Æ÷ÀÎÅÍÀÇ ÁÂÇ¥°ª.
+Mouse: ë§ˆìš°ìŠ¤ ë²„íŠ¼ì´ ìž…ë ¥ë  ë•Œë§ˆë‹¤ ìžë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜.
+íŒŒë¼ë©”í„°ì˜ ì˜ë¯¸ëŠ” ë‹¤ìŒê³¼ ê°™ë‹¤.
+@param button: ì‚¬ìš©ëœ ë²„íŠ¼ì˜ ì¢…ë¥˜
+GLUT_LEFT_BUTTON - ì™¼ìª½ ë²„íŠ¼
+GLUT_RIGHT_BUTTON - ì˜¤ë¥¸ìª½ ë²„íŠ¼
+GLUT_MIDDLE_BUTTON - ê°€ìš´ë° ë²„íŠ¼ (íœ ì´ ëˆŒëŸ¬ì¡Œì„ ë•Œ)
+3 - ë§ˆìš°ìŠ¤ íœ  (íœ ì´ ìœ„ë¡œ ëŒì•„ ê°”ìŒ).
+4 - ë§ˆìš°ìŠ¤ íœ  (íœ ì´ ì•„ëž˜ë¡œ ëŒì•„ ê°”ìŒ).
+@param state: ì¡°ìž‘ ìƒíƒœ
+GLUT_DOWN - ëˆŒëŸ¬ ì¡ŒìŒ
+GLUT_UP - ë†“ì—¬ì¡ŒìŒ
+@param x,y: ì¡°ìž‘ì´ ì¼ì–´ë‚¬ì„ ë•Œ, ë§ˆìš°ìŠ¤ í¬ì¸í„°ì˜ ì¢Œí‘œê°’.
 */
 void Mouse(int button, int state, int x, int y)
 {
@@ -271,8 +271,8 @@ void Mouse(int button, int state, int x, int y)
 
 
 /**
-MouseMotion: ¸¶¿ì½º Æ÷ÀÎÅÍ°¡ ¿òÁ÷ÀÏ ¶§¸¶´Ù ÀÚµ¿À¸·Î È£ÃâµÇ´Â ÇÔ¼ö.
-@prarm x,y´Â ÇöÀç ¸¶¿ì½º Æ÷ÀÎÅÍÀÇ ÁÂÇ¥°ªÀ» ³ªÅ¸³½´Ù.
+MouseMotion: ë§ˆìš°ìŠ¤ í¬ì¸í„°ê°€ ì›€ì§ì¼ ë•Œë§ˆë‹¤ ìžë™ìœ¼ë¡œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜.
+@prarm x,yëŠ” í˜„ìž¬ ë§ˆìš°ìŠ¤ í¬ì¸í„°ì˜ ì¢Œí‘œê°’ì„ ë‚˜íƒ€ë‚¸ë‹¤.
 */
 void MouseMotion(int x, int y)
 {

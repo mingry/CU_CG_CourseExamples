@@ -1,8 +1,8 @@
 #version 330
 
-layout (location = 0) in vec3 vs_position;	// ²ÀÁöÁ¡ À§Ä¡
-layout (location = 1) in vec3 vs_normal;	// ²ÀÁöÁ¡ ³ë¸»º¤ÅÍ
-layout (location = 2) in vec4 vs_color;		// ²ÀÁöÁ¡ »ö±ò
+layout (location = 0) in vec3 vs_position;	// ê¼­ì§€ì  ìœ„ì¹˜
+layout (location = 1) in vec3 vs_normal;	// ê¼­ì§€ì  ë…¸ë§ë²¡í„°
+layout (location = 2) in vec4 vs_color;		// ê¼­ì§€ì  ìƒ‰ê¹”
 
 uniform mat4 projection_matrix;
 uniform mat4 modelview_matrix;
@@ -11,9 +11,9 @@ uniform mat4 proj_matrix;
 uniform mat4 view_matrix;
 uniform mat4 model_matrix;
 
-out vec3 fs_normal;	// º¯È¯ Çà·ÄÀÌ Àû¿ëµÈ ³ë¸»º¤ÅÍ.
+out vec3 fs_normal;	// ë³€í™˜ í–‰ë ¬ì´ ì ìš©ëœ ë…¸ë§ë²¡í„°.
 out vec4 fs_color;
-out vec3 fs_eye_dir;	// modelview transformÀÌ Àû¿ëµÈ ÈÄ vertex À§Ä¡. (viewer's eye¿¡¼­ vertex·Î ÇâÇÏ´Â º¤ÅÍ·Î º¼ ¼ö ÀÖÀ½.)
+out vec3 fs_eye_dir;	// modelview transformì´ ì ìš©ëœ í›„ vertex ìœ„ì¹˜. (viewer's eyeì—ì„œ vertexë¡œ í–¥í•˜ëŠ” ë²¡í„°ë¡œ ë³¼ ìˆ˜ ìˆìŒ.)
 
 
 void main()
@@ -22,7 +22,7 @@ void main()
 
 	gl_Position = proj_matrix * modelview * vec4(vs_position, 1.f);
 	fs_normal = inverse(transpose(mat3(view_matrix * model_matrix))) * vs_normal;
-	fs_eye_dir = vec3(modelview * vec4(vs_position, 1.f));	// ProjectionÀ» Àû¿ëÇÏÁö ¾ÊÀ½.
+	fs_eye_dir = vec3(modelview * vec4(vs_position, 1.f));	// Projectionì„ ì ìš©í•˜ì§€ ì•ŠìŒ.
 
 	fs_color = vs_color;
 }

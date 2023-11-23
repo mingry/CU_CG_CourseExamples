@@ -20,8 +20,8 @@ struct Light
 	float cos_cutoff;
 };
 
-uniform int num_of_lights;		// »ç¿ëµÉ ºûÀÇ °³¼ö	
-uniform Light lights[100];		// ÃÖ´ë »ç¿ë°¡´É ºûÀÇ °³¼ö¸¦ 100·Î ÇÑÁ¤.
+uniform int num_of_lights;		// ì‚¬ìš©ë  ë¹›ì˜ ê°œìˆ˜	
+uniform Light lights[100];		// ìµœëŒ€ ì‚¬ìš©ê°€ëŠ¥ ë¹›ì˜ ê°œìˆ˜ë¥¼ 100ë¡œ í•œì •.
 
 
 float I_a = 1.0;				  // ambient light intensity
