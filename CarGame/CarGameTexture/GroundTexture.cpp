@@ -116,7 +116,7 @@ void LoadTexture()
 {
 	ilGenImages(1, &g_image);
 	ilBindImage(g_image);
-	iluLoadImage("../Data/road.jpg");
+	iluLoadImage(L"../Data/road.jpg");
 	int img_w = ilGetInteger(IL_IMAGE_WIDTH);		// it must be a number of 2^n;
 	int img_h = ilGetInteger(IL_IMAGE_HEIGHT);	// it must be same to the img_w;
 

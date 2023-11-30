@@ -89,7 +89,7 @@ void LoadTexture()
 {
 	ilGenImages(1, &g_image);
 	ilBindImage(g_image);
-	iluLoadImage("../Data/Diffuse_2K.png");
+	iluLoadImage(L"../Data/Diffuse_2K.png");
 
 	// OpenGL에서는 가로 세로 길이가 2의 n승인 이미지를 사용해야하므로
 	// iluScale 함수를 이용하여 이미지 크기를 변경한다.

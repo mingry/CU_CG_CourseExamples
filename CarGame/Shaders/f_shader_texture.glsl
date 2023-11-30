@@ -4,8 +4,6 @@ in vec4 fs_color;
 in vec2 fs_uv;
 in vec3 fs_normal;
 
-uniform int shading_mode = 1;
-
 layout (location = 0) out vec4 color;
 
 uniform sampler2D tex0;
