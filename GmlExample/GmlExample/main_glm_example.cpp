@@ -1,4 +1,4 @@
-
+﻿
 #include "glm/glm.hpp"	// glm 기본 함수
 #include "glm/ext.hpp"	// glm 확장 함수
 #include <math.h>	// c/c++ 기본 수학함수 (cos, sin 등)
