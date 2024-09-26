@@ -68,13 +68,13 @@ int main(int argc, char** argv)
 
 
 	// Print out
-	std::cout << "v0 = " << glm::to_string(v0) << std::endl << std::endl;
-	std::cout << "v1 = " << glm::to_string(v1) << std::endl << std::endl;
-	std::cout << "v0 + v1 = " << glm::to_string(v2) << std::endl << std::endl;
-	std::cout << "2.5 * v1 = " << glm::to_string(v3) << std::endl << std::endl;
+	std::cout << "v0 = " << v0 << std::endl << std::endl;
+	std::cout << "v1 = " << v1 << std::endl << std::endl;
+	std::cout << "v0 + v1 = " << v2 << std::endl << std::endl;
+	std::cout << "2.5 * v1 = " << v3 << std::endl << std::endl;
 	std::cout << "Length of v1 = " << length_v1 << std::endl << std::endl;
 	std::cout << "Dot product of v0 and v1 = " << dot_v0_v1 << std::endl << std::endl;
-	std::cout << "Cross product of v0 and v1 = " << glm::to_string(cross_v0_v1) << std::endl << std::endl;
+	std::cout << "Cross product of v0 and v1 = " << cross_v0_v1 << std::endl << std::endl;
 
 
 
@@ -113,13 +113,13 @@ int main(int argc, char** argv)
 
 
 	// Print out
-	std::cout << "m0 = " << glm::to_string(m0) << std::endl << std::endl;
-	std::cout << "m1 = " << glm::to_string(m1) << std::endl << std::endl;
-	std::cout << "m2 = " << glm::to_string(m2) << std::endl << std::endl;
-	std::cout << "Inverse of m1 = " << glm::to_string(m1_inverse) << std::endl << std::endl;
-	std::cout << "Transpose of m1 = " << glm::to_string(m1_transpose) << std::endl << std::endl;
-	std::cout << "m1 * m2 = " << glm::to_string(m1xm2) << std::endl << std::endl;
-	std::cout << "m1 * v1 = " << glm::to_string(m1xv1) << std::endl << std::endl;
+	std::cout << "m0 = " << m0 << std::endl << std::endl;
+	std::cout << "m1 = " << m1 << std::endl << std::endl;
+	std::cout << "m2 = " << m2 << std::endl << std::endl;
+	std::cout << "Inverse of m1 = " << m1_inverse << std::endl << std::endl;
+	std::cout << "Transpose of m1 = " << m1_transpose << std::endl << std::endl;
+	std::cout << "m1 * m2 = " << m1xm2 << std::endl << std::endl;
+	std::cout << "m1 * v1 = " << m1xv1 << std::endl << std::endl;
 
 
 
@@ -151,18 +151,18 @@ int main(int argc, char** argv)
 	glm::vec4 u0_ntn = glm::normalize(u0_nt);
 
 	// Print out
-	std::cout << "p0 = " << glm::to_string(p0) << std::endl << std::endl;
-	std::cout << "p1 = " << glm::to_string(p1) << std::endl << std::endl;
-	std::cout << "u0 = " << glm::to_string(u0) << std::endl << std::endl;
-	std::cout << "u0_n = " << glm::to_string(u0_n) << std::endl << std::endl;
-	std::cout << "R = " << glm::to_string(R) << std::endl << std::endl;
-	std::cout << "T = " << glm::to_string(T) << std::endl << std::endl;
-	std::cout << "S = " << glm::to_string(S) << std::endl << std::endl;
-	std::cout << "M = TRS = " << glm::to_string(M) << std::endl << std::endl;
-	std::cout << "M*p0 = " << glm::to_string(p0_t) << std::endl << std::endl;
-	std::cout << "M*p1 = " << glm::to_string(p1_t) << std::endl << std::endl;
-	std::cout << "M*u0_n = " << glm::to_string(u0_n) << std::endl << std::endl;
-	std::cout << "nomalize(M*u0_n) = " << glm::to_string(u0_ntn) << std::endl << std::endl;
+	std::cout << "p0 = " << p0 << std::endl << std::endl;
+	std::cout << "p1 = " << p1 << std::endl << std::endl;
+	std::cout << "u0 = " << u0 << std::endl << std::endl;
+	std::cout << "u0_n = " << u0_n << std::endl << std::endl;
+	std::cout << "R = " << R << std::endl << std::endl;
+	std::cout << "T = " << T << std::endl << std::endl;
+	std::cout << "S = " << S << std::endl << std::endl;
+	std::cout << "M = TRS = " << M << std::endl << std::endl;
+	std::cout << "M*p0 = " << p0_t << std::endl << std::endl;
+	std::cout << "M*p1 = " << p1_t << std::endl << std::endl;
+	std::cout << "M*u0_n = " << u0_n << std::endl << std::endl;
+	std::cout << "nomalize(M*u0_n) = " << u0_ntn << std::endl << std::endl;
 
 	return 0;
 }
